@@ -1,7 +1,8 @@
 {
-  "name": "my-react-app",
+  "name": "finca-florlima",
+  "description": "Modern website for Finca Florlima - A family farm specializing in premium dairy products and fresh limes",
   "private": true,
-  "version": "0.0.0",
+  "version": "1.0.0",
   "type": "module",
   "scripts": {
     "dev": "vite",
@@ -23,5 +24,7 @@
     "eslint-plugin-react-refresh": "^0.5.2",
     "globals": "^17.4.0",
     "vite": "^8.0.4"
-  }
+  },
+  "author": "Carlos Mendez",
+  "keywords": ["farm", "dairy", "limes", "react", "vite"]
 }
