@@ -53,7 +53,24 @@ function App() {
     galleryCowsDesc: 'Nuestras vacas prosperan en campos verdes y trato gentil.',
     galleryGoats: 'Cabras Gentiles',
     galleryGoatsDesc: 'Nuestras cabras producen la mejor leche y queso.',
-  }
+    // Statistics section
+    statsTitle: '30 años de experiencia en la producción de leche, queso y limones de la más alta calidad',
+    stat1Title: '3 Generaciones',
+    stat1Desc: 'De tradición familiar y dedicación',
+    stat2Title: '50+ Hectáreas',
+    stat2Desc: 'De pasturas orgánicas y huertos',
+    stat3Title: '100% Natural',
+    stat3Desc: 'Sin aditivos ni químicos dañinos',
+    stat4Title: '5 Productos',
+    stat4Desc: 'De la más alta calidad artesanal',
+    // Values section
+    valuesTitle: 'Nuestro Compromiso',
+    familyValue: 'Tradición Familiar',
+    familyDesc: 'Tres generaciones de pasión por la excelencia',
+    qualityValue: 'Calidad Premium',
+    qualityDesc: 'Métodos tradicionales y cuidado artesanal',
+    sustainValue: 'Sostenibilidad',
+    sustainDesc: 'Respeto por la naturaleza y el bienestar animal',
 
   return (
     <div className="ranch-home">
@@ -134,6 +151,46 @@ function App() {
             <h3>{text.simpleIngredients}</h3>
             <p>{text.simpleIngredientsDesc}</p>
           </article>
+        </div>
+      </section>
+
+      <section className="stats-section">
+        <h2>{text.statsTitle}</h2>
+        <div className="stats-grid">
+          <div className="stat-item">
+            <div className="stat-number">{text.stat1Title}</div>
+            <p>{text.stat1Desc}</p>
+          </div>
+          <div className="stat-item">
+            <div className="stat-number">{text.stat2Title}</div>
+            <p>{text.stat2Desc}</p>
+          </div>
+          <div className="stat-item">
+            <div className="stat-number">{text.stat3Title}</div>
+            <p>{text.stat3Desc}</p>
+          </div>
+          <div className="stat-item">
+            <div className="stat-number">{text.stat4Title}</div>
+            <p>{text.stat4Desc}</p>
+          </div>
+        </div>
+      </section>
+
+      <section className="values-section">
+        <h2>{text.valuesTitle}</h2>
+        <div className="values-grid">
+          <div className="value-card">
+            <h3>{text.familyValue}</h3>
+            <p>{text.familyDesc}</p>
+          </div>
+          <div className="value-card">
+            <h3>{text.qualityValue}</h3>
+            <p>{text.qualityDesc}</p>
+          </div>
+          <div className="value-card">
+            <h3>{text.sustainValue}</h3>
+            <p>{text.sustainDesc}</p>
+          </div>
         </div>
       </section>
 
