@@ -71,6 +71,7 @@ function App() {
     qualityDesc: 'Métodos tradicionales y cuidado artesanal',
     sustainValue: 'Sostenibilidad',
     sustainDesc: 'Respeto por la naturaleza y el bienestar animal',
+  }
 
   return (
     <div className="ranch-home">
