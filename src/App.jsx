@@ -1,7 +1,4 @@
-import { StrictMode } from 'react'
-import { createRoot } from 'react-dom/client'
 import './App.css'
-import App from './App.jsx'
 
 function App() {
   // Spanish content for Finca Florlima website
@@ -148,11 +145,11 @@ function App() {
             <div className="location-details">
               <div className="detail-item">
                 <h3>📍 {text.locationAddress}</h3>
-                <p>Limón Province, Costa Rica</p>
+                <p>Limón, Costa Rica</p>
               </div>
               <div className="detail-item">
                 <h3>🕐 {text.locationHours}</h3>
-                <p>Contact us to schedule a visit</p>
+                <p>Contáctanos para agendar una visita</p>
               </div>
               <div className="detail-item">
                 <h3>📞 {text.locationPhone}</h3>
@@ -166,9 +163,10 @@ function App() {
               width="100%"
               height="400"
               style={{ border: 0, borderRadius: '16px' }}
-              allowFullScreen=""
+              allowFullScreen={true}
               loading="lazy"
               referrerPolicy="no-referrer-when-downgrade"
+              title="Mapa de ubicación de Finca Florlima"
             ></iframe>
           </div>
         </div>
@@ -180,11 +178,11 @@ function App() {
           <strong>{text.contactCTA}</strong>
           <div className="contact-details">
             <p><strong>Marlen Navarro Saenz</strong></p>
-            <p>Phone: 88438492</p>
-            <p>Sinpe Móvil: 88438492</p>
+            <p>Teléfono: 88438492</p>
+            <p>SINPE Móvil: 88438492</p>
           </div>
         </div>
-        <a className="button button-primary" href="mailto:hello@sunnyridgedairy.com">
+        <a className="button button-primary" href="tel:88438492">
           {text.contactButton}
         </a>
       </section>
