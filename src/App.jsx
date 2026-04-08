@@ -12,6 +12,7 @@ function App() {
       navProducts: 'Products',
       navStory: 'Story',
       navContact: 'Contact',
+      navLocation: 'Location',
       heroEyebrow: 'Fresh Farm Products',
       heroTitle: 'Premium limes, milk and cheese from Finca Florlima.',
       heroText:
@@ -44,6 +45,11 @@ function App() {
       contactPrompt: 'Need fresh products for delivery or pickup?',
       contactCTA: 'Contact us and we will help you choose the right products for your family.',
       contactButton: 'Contact Finca Florlima',
+      locationTitle: 'Visit Finca Florlima',
+      locationSubtitle: 'Find us in the heart of Limón, Costa Rica',
+      locationAddress: 'Limón Province, Costa Rica',
+      locationHours: 'Open by appointment',
+      locationPhone: '(+506) 88438492',
       galleryFarm: 'Finca Florlima',
       galleryFarmDesc:
         'Our farm is where everything grows—rolling pastures, fresh orchards, and heartfelt care.',
@@ -58,6 +64,7 @@ function App() {
       navProducts: 'Productos',
       navStory: 'Historia',
       navContact: 'Contacto',
+      navLocation: 'Ubicación',
       heroEyebrow: 'Productos Frescos',
       heroTitle: 'Limon mecino premium, leche y queso de la Finca Florlima.',
       heroText:
@@ -90,6 +97,11 @@ function App() {
       contactPrompt: '¿Necesitas productos frescos para entrega o recogida?',
       contactCTA: 'Contacta y te ayudaremos a elegir los productos ideales para tu familia.',
       contactButton: 'Contactar Finca Florlima',
+      locationTitle: 'Visita Finca Florlima',
+      locationSubtitle: 'Encuentranos en el corazón de Limón, Costa Rica',
+      locationAddress: 'Provincia de Limón, Costa Rica',
+      locationHours: 'Abierto por cita previa',
+      locationPhone: '(+506) 88438492',
       galleryFarm: 'Finca Florlima',
       galleryFarmDesc:
         'Nuestra granja es donde todo crece—praderas verdes, huertos frescos y cuidado del corazón.',
@@ -110,6 +122,7 @@ function App() {
         <nav className="nav-links">
           <a href="#products">{text.navProducts}</a>
           <a href="#story">{text.navStory}</a>
+          <a href="#location">{text.navLocation}</a>
           <a href="#contact">{text.navContact}</a>
         </nav>
         <div className="language-switch">
@@ -187,6 +200,40 @@ function App() {
             <h3>{text.simpleIngredients}</h3>
             <p>{text.simpleIngredientsDesc}</p>
           </article>
+        </div>
+      </section>
+
+      <section id="location" className="location-section">
+        <div className="location-content">
+          <div className="location-info">
+            <h2>{text.locationTitle}</h2>
+            <p className="location-subtitle">{text.locationSubtitle}</p>
+            <div className="location-details">
+              <div className="detail-item">
+                <h3>📍 {text.locationAddress}</h3>
+                <p>Limón Province, Costa Rica</p>
+              </div>
+              <div className="detail-item">
+                <h3>🕐 {text.locationHours}</h3>
+                <p>Contact us to schedule a visit</p>
+              </div>
+              <div className="detail-item">
+                <h3>📞 {text.locationPhone}</h3>
+                <p>88438492</p>
+              </div>
+            </div>
+          </div>
+          <div className="location-map">
+            <iframe
+              src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3930.4563029821127!2d-82.4381!3d10.2631!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x8fa80b0d0d0d0d0d%3A0x0!2sLim%C3%B3n%2C%20Costa%20Rica!5e0!3m2!1sen!2scr!4v1"
+              width="100%"
+              height="400"
+              style={{ border: 0, borderRadius: '16px' }}
+              allowFullScreen=""
+              loading="lazy"
+              referrerPolicy="no-referrer-when-downgrade"
+            ></iframe>
+          </div>
         </div>
       </section>
 
