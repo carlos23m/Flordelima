@@ -1,5 +1,5 @@
 {
-  "name": "finca-florlima",
+  "name": "florlima",
   "description": "Modern website for Finca Florlima - A family farm specializing in premium dairy products and fresh limes",
   "private": true,
   "version": "1.0.0",
@@ -11,6 +11,7 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@vercel/analytics": "^2.0.1",
     "react": "^19.2.4",
     "react-dom": "^19.2.4"
   },
@@ -26,5 +27,11 @@
     "vite": "^8.0.4"
   },
   "author": "Carlos Mendez",
-  "keywords": ["farm", "dairy", "limes", "react", "vite"]
+  "keywords": [
+    "farm",
+    "dairy",
+    "limes",
+    "react",
+    "vite"
+  ]
 }
