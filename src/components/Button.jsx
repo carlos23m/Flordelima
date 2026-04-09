@@ -217,43 +217,6 @@ export default function Button({
           <Icon className={`w-4 h-4 sm:w-5 sm:h-5 transition-transform duration-300 ${isHovered ? '-translate-x-1' : ''}`} />
         )}
       </span>
-
-      <style>{`
-        @keyframes ripple {
-          0% {
-            box-shadow: 0 0 0 0 rgba(255, 255, 255, 0.7);
-          }
-          70% {
-            box-shadow: 0 0 0 20px rgba(255, 255, 255, 0);
-          }
-          100% {
-            box-shadow: 0 0 0 0 rgba(255, 255, 255, 0);
-          }
-        }
-
-        /* Mobile-specific styles */
-        @media (max-width: 640px) {
-          button, a {
-            min-height: 44px;
-            min-width: 44px;
-          }
-        }
-
-        /* Disable animations on reduced motion */
-        @media (prefers-reduced-motion: reduce) {
-          button, a {
-            transition: none !important;
-            animation: none !important;
-          }
-        }
-
-        /* Optimize for touch devices */
-        @media (hover: none) and (pointer: coarse) {
-          button:active, a:active {
-            transform: scale(0.95) !important;
-          }
-        }
-      `}</style>
     </TAG>
   )
 }

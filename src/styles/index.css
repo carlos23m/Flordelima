@@ -48,6 +48,45 @@ h1,
 h2,
 h3 {
   margin: 0;
+}
+
+/* Button component animations */
+@keyframes ripple {
+  0% {
+    box-shadow: 0 0 0 0 rgba(255, 255, 255, 0.7);
+  }
+  70% {
+    box-shadow: 0 0 0 20px rgba(255, 255, 255, 0);
+  }
+  100% {
+    box-shadow: 0 0 0 0 rgba(255, 255, 255, 0);
+  }
+}
+
+/* Mobile-specific styles for buttons */
+@media (max-width: 640px) {
+  button, a[role="button"] {
+    min-height: 44px;
+    min-width: 44px;
+  }
+}
+
+/* Disable animations on reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  button, a[role="button"] {
+    transition: none !important;
+    animation: none !important;
+  }
+}
+
+/* Optimize for touch devices */
+@media (hover: none) and (pointer: coarse) {
+  button:active, a[role="button"]:active {
+    transform: scale(0.95) !important;
+  }
+}
+
+html {
   font-family: var(--font);
   color: var(--heading);
 }
