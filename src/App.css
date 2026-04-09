@@ -709,10 +709,12 @@
 }
 
 .social-grid {
+  align-items: center;     /* Vertical centering */
+  justify-content: center;
   display: grid;
   grid-template-columns: repeat(4, 1fr);
   gap: 24px;
-  max-width: 700px;
+  max-width: 250px;
   margin: 0 auto;
 }
 
@@ -768,6 +770,9 @@
   }
 
   .social-grid {
+    align-items: center;     /* Vertical centering */
+    display: flex;
+    justify-content: center;
     grid-template-columns: repeat(2, 1fr);
     gap: 20px;
   }
@@ -788,6 +793,9 @@
   }
 
   .social-grid {
+    align-items: center;     /* Vertical centering */
+    display: flex;
+    justify-content: center;
     grid-template-columns: 1fr;
     gap: 16px;
   }
