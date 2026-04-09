@@ -45,7 +45,7 @@ function App() {
     locationSubtitle: 'Encuentranos en Guacimo, Limón, Costa Rica',
     locationAddress: 'Guacimo, Limón, Costa Rica',
     locationHours: 'Abierto por cita previa',
-    locationPhone: '(+506) 88438492',
+    locationPhone: '(+506) 8843-8492',
     galleryFarm: 'Finca Florlima',
     galleryFarmDesc:
       'Nuestra granja es donde todo crece—praderas verdes, huertos frescos y cuidado del corazón.',
@@ -235,9 +235,9 @@ function App() {
           <p>{text.contactPrompt}</p>
           <strong>{text.contactCTA}</strong>
           <div className="contact-details">
-            <p><strong>Marlen Navarro Saenz</strong></p>
-            <p>Teléfono: 88438492</p>
-            <p>SINPE Móvil: 88438492</p>
+            <p><strong>Marlen Navarro</strong></p>
+            <p>Teléfono: 8843-8492</p>
+            <p>SINPE Móvil: 8843-8492</p>
           </div>
         </div>
         <a className="button button-primary" href="tel:88438492">
