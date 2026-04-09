@@ -1,5 +1,5 @@
-import './App.css'
-import ProductCard from './ProductCard'
+import './styles/App.css'
+import { ProductCard } from './components'
 
 function App() {
   // Spanish content for Finca Florlima website
