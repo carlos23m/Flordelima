@@ -1,4 +1,5 @@
 import './App.css'
+import ProductCard from './ProductCard'
 
 function App() {
   // Spanish content for Finca Florlima website
@@ -12,25 +13,35 @@ function App() {
     heroEyebrow: 'Productos Premium de la Finca',
     heroTitle: 'Limón mecino, leche y queso artesanal de Finca Florlima',
     heroText:
-      'Bienvenido a Finca Florlima, una finca familiar con más de tres décadas de experiencia en la producción de alimentos de la más alta calidad. Ubicada en el corazón de Guacimo, Limón, nos especializamos en cultivar Limón Mexicano premium, así como producir leche y queso artesanal de vaca y cabra. Cada producto es elaborado con pasión, respeto por la naturaleza y el compromiso de llevar lo mejor de nuestra tierra a tu mesa.',
+      'Bienvenido a Finca Florlima, una finca familiar con más de tres décadas de experiencia en la producción de alimentos de la más alta calidad. Ubicada en el corazón de Guacimo, Limón, nos especializamos en cultivar Limón mecino premium, así como producir leche y queso artesanal de vaca y cabra. Cada producto es elaborado con pasión, respeto por la naturaleza y el compromiso de llevar lo mejor de nuestra tierra a tu mesa.',
     viewMilk: 'Conocer Productos',
     meetRanch: 'Ver Historia',
     freshOfferings: 'Nuestros Productos Premium',
     chooseMilk: 'Descubre nuestra selección curada de productos artesanales frescos',
     wholeMilk: 'Leche de Vaca',
     wholeMilkDesc: 'Leche fresca pasteurizada de nuestras vacas alimentadas naturalmente. Rica en nutrientes, cremosa y con un sabor incomparable. Ideal para café, cocina diaria y toda la familia.',
+    wholeMilkIcon: '🥛',
+    wholeMilkCategory: 'Lácteos de Vaca',
     lowFatMilk: 'Queso de Vaca',
     lowFatMilkDesc: 'Queso artesanal elaborado con técnicas tradicionales usando nuestra leche de vaca premium. De textura suave y sabor profundo, perfecto para degustar o usar en cocina.',
-    lactoseFreeMilk: 'Limón Mexicano',
+    lowFatMilkIcon: '🧀',
+    lowFatMilkCategory: 'Lácteos de Vaca',
+    lactoseFreeMilk: 'Limón Mecino',
     lactoseFreeMilkDesc: 'Limones frescos y jugosos de nuestro huerto. Cosechados en el punto justo de maduración, son perfectos para bebidas refrescantes, cocina gourmet y postres. Citrus acido con aroma cautivador.',
+    lactoseFreeMilkIcon: '🍋',
+    lactoseFreeMilkCategory: 'Cítricos Frescos',
     product4: 'Leche de Cabra',
     product4Desc: 'Leche delicada y nutritiva de nuestras cabras criadas con amor. Más digerible que la leche de vaca, rica en proteínas y con un sabor suave y característico.',
+    product4Icon: '🐐',
+    product4Category: 'Lácteos de Cabra',
     product5: 'Queso de Cabra',
     product5Desc: 'Queso cremoso y refinado producido artesanalmente. Su sabor único y textura sedosa lo hacen ideal como tabla de quesos, acompañamiento o para deleitar el paladar más exigente.',
+    product5Icon: '✨',
+    product5Category: 'Lácteos de Cabra',
     ranchStory: 'Nuestra Historia',
     storyTitle: 'Tres generaciones de dedicación a la excelencia agrícola.',
     storyText:
-      'Finca Florlima es el resultado de más de treinta años de pasión dedicados a la agricultura y ganadería sostenible. Desde nuestros inicios, la familia que corre esta finca ha mantenido un compromiso inquebrantable con la calidad y la sostenibilidad. Cultivamos Limón Mexicano en condiciones naturales, criamos nuestras vacas y cabras con respeto y cuidado, y procesamos todos nuestros productos en el lugar con métodos tradicionales que honran la artesanía. Cada generación ha aportado innovación responsable, transformando Florlima en un referente de confianza para familias que valoran la calidad verdadera y la procedencia de lo que consumen.',
+      'Finca Florlima es el resultado de más de treinta años de pasión dedicados a la agricultura y ganadería sostenible. Desde nuestros inicios, la familia que corre esta finca ha mantenido un compromiso inquebrantable con la calidad y la sostenibilidad. Cultivamos Limón mecino en condiciones naturales, criamos nuestras vacas y cabras con respeto y cuidado, y procesamos todos nuestros productos en el lugar con métodos tradicionales que honran la artesanía. Cada generación ha aportado innovación responsable, transformando Florlima en un referente de confianza para familias que valoran la calidad verdadera y la procedencia de lo que consumen.',
     pastureFirst: 'Animales con Bienestar',
     pastureFirstDesc:
       'Nuestras vacas y cabras pastan libremente en pasturas naturales y ecológicas. Un ambiente tranquilo, alimento de calidad y trato humano resultan en productos de sabor excepcional.',
@@ -117,26 +128,36 @@ function App() {
           <h2>{text.chooseMilk}</h2>
         </div>
         <div className="product-grid">
-          <article className="product-card">
-            <h3>{text.wholeMilk}</h3>
-            <p>{text.wholeMilkDesc}</p>
-          </article>
-          <article className="product-card">
-            <h3>{text.lowFatMilk}</h3>
-            <p>{text.lowFatMilkDesc}</p>
-          </article>
-          <article className="product-card">
-            <h3>{text.lactoseFreeMilk}</h3>
-            <p>{text.lactoseFreeMilkDesc}</p>
-          </article>
-          <article className="product-card">
-            <h3>{text.product4}</h3>
-            <p>{text.product4Desc}</p>
-          </article>
-          <article className="product-card">
-            <h3>{text.product5}</h3>
-            <p>{text.product5Desc}</p>
-          </article>
+          <ProductCard
+            icon={text.wholeMilkIcon}
+            title={text.wholeMilk}
+            description={text.wholeMilkDesc}
+            category={text.wholeMilkCategory}
+          />
+          <ProductCard
+            icon={text.lowFatMilkIcon}
+            title={text.lowFatMilk}
+            description={text.lowFatMilkDesc}
+            category={text.lowFatMilkCategory}
+          />
+          <ProductCard
+            icon={text.lactoseFreeMilkIcon}
+            title={text.lactoseFreeMilk}
+            description={text.lactoseFreeMilkDesc}
+            category={text.lactoseFreeMilkCategory}
+          />
+          <ProductCard
+            icon={text.product4Icon}
+            title={text.product4}
+            description={text.product4Desc}
+            category={text.product4Category}
+          />
+          <ProductCard
+            icon={text.product5Icon}
+            title={text.product5}
+            description={text.product5Desc}
+            category={text.product5Category}
+          />
         </div>
       </section>
 
