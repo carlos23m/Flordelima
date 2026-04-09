@@ -42,8 +42,8 @@ function App() {
     contactCTA: 'Contacta y te ayudaremos a elegir los productos ideales para tu familia.',
     contactButton: 'Contactar Finca Florlima',
     locationTitle: 'Visita Finca Florlima',
-    locationSubtitle: 'Encuentranos en el corazón de Limón, Costa Rica',
-    locationAddress: 'Provincia de Limón, Costa Rica',
+    locationSubtitle: 'Encuentranos en Guacimo, Limón, Costa Rica',
+    locationAddress: 'Guacimo, Limón, Costa Rica',
     locationHours: 'Abierto por cita previa',
     locationPhone: '(+506) 88438492',
     galleryFarm: 'Finca Florlima',
@@ -217,7 +217,7 @@ function App() {
           </div>
           <div className="location-map">
             <iframe
-              src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3930.4563029821127!2d-82.4381!3d10.2631!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x8fa80b0d0d0d0d0d%3A0x0!2sLim%C3%B3n%2C%20Costa%20Rica!5e0!3m2!1sen!2scr!4v1"
+              src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3932.5!2d-82.7667!3d10.3167!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x8fa7f5f5f5f5f5f5%3A0x0!2sGuacimo%2C%20Lim%C3%B3n%2C%20Costa%20Rica!5e0!3m2!1ses!2scr!4v1"
               width="100%"
               height="400"
               style={{ border: 0, borderRadius: '16px' }}
