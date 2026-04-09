@@ -71,6 +71,13 @@ function App() {
     qualityDesc: 'Métodos tradicionales y cuidado artesanal',
     sustainValue: 'Sostenibilidad',
     sustainDesc: 'Respeto por la naturaleza y el bienestar animal',
+    // Social media section
+    socialTitle: 'Síguenos en Redes Sociales',
+    socialSubtitle: 'Conecta con Finca Florlima y entérate de nuestras últimas noticias',
+    facebook: 'Facebook',
+    instagram: 'Instagram',
+    whatsapp: 'WhatsApp',
+    youtube: 'YouTube',
   }
 
   return (
@@ -226,6 +233,31 @@ function App() {
               referrerPolicy="no-referrer-when-downgrade"
               title="Mapa de ubicación de Finca Florlima"
             ></iframe>
+          </div>
+        </div>
+      </section>
+
+      <section className="social-section">
+        <div className="social-container">
+          <h2>{text.socialTitle}</h2>
+          <p className="social-subtitle">{text.socialSubtitle}</p>
+          <div className="social-grid">
+            <a href="https://facebook.com" className="social-link" target="_blank" rel="noopener noreferrer" title={text.facebook}>
+              <span className="social-icon">f</span>
+              <span className="social-label">{text.facebook}</span>
+            </a>
+            <a href="https://instagram.com" className="social-link" target="_blank" rel="noopener noreferrer" title={text.instagram}>
+              <span className="social-icon">📷</span>
+              <span className="social-label">{text.instagram}</span>
+            </a>
+            <a href="https://wa.me/50688438492" className="social-link" target="_blank" rel="noopener noreferrer" title={text.whatsapp}>
+              <span className="social-icon">💬</span>
+              <span className="social-label">{text.whatsapp}</span>
+            </a>
+            <a href="https://youtube.com" className="social-link" target="_blank" rel="noopener noreferrer" title={text.youtube}>
+              <span className="social-icon">▶</span>
+              <span className="social-label">{text.youtube}</span>
+            </a>
           </div>
         </div>
       </section>
