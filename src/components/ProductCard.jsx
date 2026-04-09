@@ -108,7 +108,7 @@ export default function ProductCard({ icon, title, description, category }) {
             size="md"
             fullWidth={true}
             className="w-full sm:text-base"
-            onClick={(e) => {
+            onClick={() => {
               const contactSection = document.getElementById('contact')
               if (contactSection) {
                 contactSection.scrollIntoView({ behavior: 'smooth' })
