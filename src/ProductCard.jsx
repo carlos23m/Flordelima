@@ -1,4 +1,5 @@
 import { useState } from 'react'
+import Button from './Button'
 
 export default function ProductCard({ icon, title, description, category }) {
   const [isHovered, setIsHovered] = useState(false)
@@ -88,33 +89,21 @@ export default function ProductCard({ icon, title, description, category }) {
             ? 'border-florlima-green/30 bg-gradient-to-t from-florlima-green/10 to-transparent' 
             : 'border-florlima-green/10 bg-gradient-to-t from-florlima-green/5 to-transparent'
         }`}>
-          <button 
-            className={`w-full py-4 px-6 rounded-2xl font-bold text-sm uppercase tracking-widest transition-all duration-300 flex items-center justify-center gap-2 group overflow-hidden relative ${
-              isHovered
-                ? 'text-white shadow-lg'
-                : 'text-white shadow-md'
-            }`}
-            style={{
-              background: isHovered
-                ? 'linear-gradient(135deg, #2d6a59 0%, #3d9970 100%)'
-                : 'linear-gradient(135deg, #3d9970 0%, #52b385 100%)',
-              transform: isHovered ? 'scale(1.02)' : 'scale(1)'
-            }}
-            onClick={() => {
+          <Button 
+            href="#contact"
+            size="lg"
+            className="w-full"
+            onClick={(e) => {
+              e.preventDefault()
               const contactSection = document.getElementById('contact')
               contactSection?.scrollIntoView({ behavior: 'smooth' })
             }}
           >
-            {/* Shine effect */}
-            <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-700" />
-            
-            <span className="relative flex items-center gap-2">
-              Solicitar Ahora
-              <svg className="w-4 h-4 transition-transform group-hover:translate-x-1 duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M13 7l5 5m0 0l-5 5m5-5H6" />
-              </svg>
-            </span>
-          </button>
+            Solicitar Ahora
+            <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M13 7l5 5m0 0l-5 5m5-5H6" />
+            </svg>
+          </Button>
 
           {/* Hover hint */}
           <div className={`text-center mt-3 text-xs font-semibold transition-all duration-300 ${
