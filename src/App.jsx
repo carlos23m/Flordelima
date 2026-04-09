@@ -10,7 +10,7 @@ function App() {
     navContact: 'Contacto',
     navLocation: 'Ubicación',
     heroEyebrow: 'Productos Premium de la Finca',
-    heroTitle: 'Limón Mexicano, leche y queso artesanal de Finca Florlima',
+    heroTitle: 'Limón mecino, leche y queso artesanal de Finca Florlima',
     heroText:
       'Bienvenido a Finca Florlima, una finca familiar con más de tres décadas de experiencia en la producción de alimentos de la más alta calidad. Ubicada en el corazón de Guacimo, Limón, nos especializamos en cultivar Limón Mexicano premium, así como producir leche y queso artesanal de vaca y cabra. Cada producto es elaborado con pasión, respeto por la naturaleza y el compromiso de llevar lo mejor de nuestra tierra a tu mesa.',
     viewMilk: 'Conocer Productos',
