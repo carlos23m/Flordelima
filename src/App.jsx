@@ -1,17 +1,17 @@
 import './App.css'
 
 function App() {
-  // Spanish content for Finca Florlima website
+  // Spanish content for Finca Flordelima website
   const text = {
-    brand: 'Finca Florlima',    
+    brand: 'Finca Flordelima',
     navProducts: 'Productos',
     navStory: 'Historia',
     navContact: 'Contacto',
     navLocation: 'Ubicación',
     heroEyebrow: 'Productos Premium de la Finca',
-    heroTitle: 'Limón mecino, leche y queso artesanal de Finca Florlima',
+    heroTitle: 'Limón mecino, leche y queso artesanal de Finca Flordelima',
     heroText:
-      'Bienvenido a Finca Florlima, una finca familiar con más de tres décadas de experiencia en la producción de alimentos de la más alta calidad. Ubicada en el corazón de Guacimo, Limón, nos especializamos en cultivar Limón Mexicano premium, así como producir leche y queso artesanal de vaca y cabra. Cada producto es elaborado con pasión, respeto por la naturaleza y el compromiso de llevar lo mejor de nuestra tierra a tu mesa.',
+      'Bienvenido a Finca Flordelima, una finca familiar con más de tres décadas de experiencia en la producción de alimentos de la más alta calidad. Ubicada en el corazón de Guacimo, Limón, nos especializamos en cultivar Limón Mexicano premium, así como producir leche y queso artesanal de vaca y cabra. Cada producto es elaborado con pasión, respeto por la naturaleza y el compromiso de llevar lo mejor de nuestra tierra a tu mesa.',
     viewMilk: 'Conocer Productos',
     meetRanch: 'Ver Historia',
     freshOfferings: 'Nuestros Productos Premium',
@@ -29,23 +29,23 @@ function App() {
     ranchStory: 'Nuestra Historia',
     storyTitle: 'Tres generaciones de dedicación a la excelencia agrícola.',
     storyText:
-      'Finca Florlima es el resultado de más de treinta años de pasión dedicados a la agricultura y ganadería sostenible. Desde nuestros inicios, la familia que corre esta finca ha mantenido un compromiso inquebrantable con la calidad y la sostenibilidad. Cultivamos Limón Mexicano en condiciones naturales, criamos nuestras vacas y cabras con respeto y cuidado, y procesamos todos nuestros productos en el lugar con métodos tradicionales que honran la artesanía. Cada generación ha aportado innovación responsable, transformando Florlima en un referente de confianza para familias que valoran la calidad verdadera y la procedencia de lo que consumen.',
+      'Finca Flordelima es el resultado de más de treinta años de pasión dedicados a la agricultura y ganadería sostenible. Desde nuestros inicios, la familia que corre esta finca ha mantenido un compromiso inquebrantable con la calidad y la sostenibilidad. Cultivamos Limón Mexicano en condiciones naturales, criamos nuestras vacas y cabras con respeto y cuidado, y procesamos todos nuestros productos en el lugar con métodos tradicionales que honran la artesanía. Cada generación ha aportado innovación responsable, transformando Flordelima en un referente de confianza para familias que valoran la calidad verdadera y la procedencia de lo que consumen.',
     pastureFirst: 'Animales con Bienestar',
     pastureFirstDesc:
       'Nuestras vacas y cabras pastan libremente en pasturas naturales y ecológicas. Un ambiente tranquilo, alimento de calidad y trato humano resultan en productos de sabor excepcional.',
     localCraft: 'Elaboración Artesanal',
     localCraftDesc: 'Cada producto es elaborado en nuestras instalaciones usando recetas tradicionales y técnicas que preservan la esencia genuina de nuestros ingredientes.',
     simpleIngredients: 'Pureza Garantizada',
-    simpleIngredientsDesc: 'Cero aditivos sintéticos, cero conservantes innecesarios. Solo lo natural, lo honesto y lo delicioso que viene directamente de Finca Florlima a tu hogar.',
-    contactPrompt: '¿Listo para llevar lo mejor de Finca Florlima a tu mesa?',
-    contactCTA: 'Contactanos hoy para conocer nuestros productos, realizar pedidos especiales o visitar la finca. Marlen y su familia te recibirán con gusto para compartir la experiencia Florlima.',
+    simpleIngredientsDesc: 'Cero aditivos sintéticos, cero conservantes innecesarios. Solo lo natural, lo honesto y lo delicioso que viene directamente de Finca Flordelima a tu hogar.',
+    contactPrompt: '¿Listo para llevar lo mejor de Finca Flordelima a tu mesa?',
+    contactCTA: 'Contactanos hoy para conocer nuestros productos, realizar pedidos especiales o visitar la finca. Marlen y su familia te recibirán con gusto para compartir la experiencia Flordelima.',
     contactButton: 'Contactar Ahora',
-    locationTitle: 'Visita Finca Florlima',
+    locationTitle: 'Visita Finca Flordelima',
     locationSubtitle: 'Nos ubicamos en Guacimo, Limón - el corazón verde de Costa Rica',
     locationAddress: 'Guacimo, Limón, Costa Rica',
     locationHours: 'Abierto por cita previa',
     locationPhone: '(+506) 8843-8492',
-    galleryFarm: 'Finca Florlima',
+    galleryFarm: 'Finca Flordelima',
     galleryFarmDesc:
       'Nuestra granja es donde todo crece—praderas verdes, huertos frescos y cuidado del corazón.',
     galleryCows: 'Vacas Saludables',
@@ -72,7 +72,7 @@ function App() {
     sustainDesc: 'Respeto genuino por el ambiente, bienestar animal y prácticas responsables con la tierra.',
     // Social media section
     socialTitle: 'Síguenos en Redes Sociales',
-    socialSubtitle: 'Entérate de nuestras novedades, comparte momentos de la finca y conecta con la comunidad Florlima',
+    socialSubtitle: 'Entérate de nuestras novedades, comparte momentos de la finca y conecta con la comunidad Flordelima',
     facebook: 'Facebook',
     instagram: 'Instagram',
     whatsapp: 'WhatsApp',
@@ -230,7 +230,7 @@ function App() {
               allowFullScreen={true}
               loading="lazy"
               referrerPolicy="no-referrer-when-downgrade"
-              title="Mapa de ubicación de Finca Florlima"
+              title="Mapa de ubicación de Finca Flordelima"
             ></iframe>
           </div>
         </div>

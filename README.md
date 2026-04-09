@@ -1,10 +1,10 @@
-# Finca Florlima - Farm Website
+# Finca Flordelima - Farm Website
 
-A modern, responsive website for **Finca Florlima**, a family farm specializing in premium dairy products and fresh limes.
+A modern, responsive website for **Finca Flordelima**, a family farm specializing in premium dairy products and fresh limes.
 
-## 🌾 About Finca Florlima
+## 🌾 About Finca Flordelima
 
-Finca Florlima is a generations-old family farm dedicated to producing high-quality agricultural products:
+Finca Flordelima is a generations-old family farm dedicated to producing high-quality agricultural products:
 
 - **Fresh Limes** - Bright, juicy limes freshly picked from our orchard
 - **Cow Milk** - Fresh, creamy milk from our healthy cows
@@ -39,8 +39,8 @@ Finca Florlima is a generations-old family farm dedicated to producing high-qual
 
 1. Clone the repository:
 ```bash
-git clone https://github.com/carlos23m/Finca_Florlima.git
-cd Finca_Florlima
+git clone https://github.com/carlos23m/Finca_Flordelima.git
+cd Finca_Flordelima
 ```
 
 2. Install dependencies:
