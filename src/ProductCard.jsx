@@ -4,9 +4,27 @@ import { motion } from 'framer-motion'
 const MotionBox = motion(Box)
 
 export default function ProductCard({ icon, title, description, category }) {
+  const cardVariants = {
+    initial: { y: 0 },
+    hover: { y: -12 },
+  }
+
+  const iconVariants = {
+    float: {
+      y: [0, -8, 0],
+      transition: {
+        duration: 3,
+        repeat: Infinity,
+        ease: "easeInOut"
+      }
+    }
+  }
+
   return (
-    <MotionBox
-      whileHover={{ y: -12 }}
+    <motion.div
+      initial="initial"
+      whileHover="hover"
+      variants={cardVariants}
       transition={{ type: 'spring', stiffness: 300, damping: 20 }}
     >
       <Card 
@@ -30,8 +48,8 @@ export default function ProductCard({ icon, title, description, category }) {
         >
           <HStack justify="space-between" align="flex-start">
             <motion.div
-              animate={{ y: [0, -8, 0] }}
-              transition={{ duration: 3, repeat: Infinity }}
+              variants={iconVariants}
+              animate="float"
               style={{ fontSize: '3.5rem' }}
             >
               {icon}
@@ -107,6 +125,6 @@ export default function ProductCard({ icon, title, description, category }) {
           </motion.div>
         </CardFooter>
       </Card>
-    </MotionBox>
+    </motion.div>
   )
 }
