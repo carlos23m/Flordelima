@@ -3,8 +3,7 @@ import './App.css'
 function App() {
   // Spanish content for Finca Florlima website
   const text = {
-    brand: 'Finca Florlima',
-    dairy: '',
+    brand: 'Finca Florlima',    
     navProducts: 'Productos',
     navStory: 'Historia',
     navContact: 'Contacto',
