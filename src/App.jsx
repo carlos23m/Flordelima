@@ -243,11 +243,11 @@ function App() {
           <p className="social-subtitle">{text.socialSubtitle}</p>
           <div className="social-grid">
             <a href="https://facebook.com" className="social-link" target="_blank" rel="noopener noreferrer" title={text.facebook}>
-              <span className="social-icon">f</span>
+              <span className="social-icon">👍</span>
               <span className="social-label">{text.facebook}</span>
             </a>
             <a href="https://instagram.com" className="social-link" target="_blank" rel="noopener noreferrer" title={text.instagram}>
-              <span className="social-icon">📷</span>
+              <span className="social-icon">📸</span>
               <span className="social-label">{text.instagram}</span>
             </a>
             <a href="https://wa.me/50688438492" className="social-link" target="_blank" rel="noopener noreferrer" title={text.whatsapp}>
@@ -255,7 +255,7 @@ function App() {
               <span className="social-label">{text.whatsapp}</span>
             </a>
             <a href="https://youtube.com" className="social-link" target="_blank" rel="noopener noreferrer" title={text.youtube}>
-              <span className="social-icon">▶</span>
+              <span className="social-icon">🎥</span>
               <span className="social-label">{text.youtube}</span>
             </a>
           </div>
