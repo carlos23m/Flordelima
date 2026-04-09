@@ -137,11 +137,15 @@ export default function Button({
     if (onClick) onClick(e)
   }
 
+  // Props for anchor tags should not include disabled
+  const anchorProps = href ? { href } : { type: 'button' }
+
   return (
     <TAG
-      href={href}
+      {...anchorProps}
       onClick={handleClick}
-      disabled={disabled}
+      {...(TAG === 'button' && { disabled })}
+      role={href ? 'link' : 'button'}
       className={baseClasses}
       onMouseEnter={handleMouseEnter}
       onMouseLeave={handleMouseLeave}

@@ -105,12 +105,10 @@ export default function ProductCard({ icon, title, description, category }) {
         }`}>
           {/* Enhanced Button with better responsive sizing */}
           <Button 
-            href="#contact"
             size="md"
             fullWidth={true}
             className="w-full sm:text-base"
             onClick={(e) => {
-              e.preventDefault()
               const contactSection = document.getElementById('contact')
               if (contactSection) {
                 contactSection.scrollIntoView({ behavior: 'smooth' })
