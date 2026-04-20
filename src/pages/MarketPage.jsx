@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef } from 'react'
+import { useState, useEffect } from 'react'
 import { Card, CardContent, Box, Typography, Button } from '@mui/material'
 import {
   FaShoppingCart, FaTimes, FaPlus, FaMinus, FaWhatsapp,
@@ -170,31 +170,20 @@ function MarketCard({ product, qty, onAdd, onRemove }) {
 // ── Onvo Pay modal ───────────────────────────────────────────────────────────
 
 function OnvoPayModal({ paymentIntentId, onClose, onResult, onError }) {
-  const containerRef = useRef(null)
-
   useEffect(() => {
-    if (!paymentIntentId || !containerRef.current) return
+    if (!paymentIntentId) return
     console.log('[OnvoPayModal] calling window.onvo.pay with:', { paymentIntentId, publicKey: ONVO_PUBLIC_KEY, paymentType: 'card' })
-    console.log('[OnvoPayModal] container element:', containerRef.current)
     window.onvo.pay({
       paymentIntentId,
       publicKey: ONVO_PUBLIC_KEY,
       paymentType: 'card',
-      container: '#onvo-container',
       onSuccess: (result) => { console.log('[OnvoPayModal] onSuccess result:', result); onResult(result) },
       onError: (err) => { console.error('[OnvoPayModal] onError:', err); onError(err) },
       onClose: () => { console.log('[OnvoPayModal] onClose'); onClose() },
     })
   }, [paymentIntentId, onClose, onResult, onError])
 
-  return (
-    <div className="onvo-modal-overlay" onClick={onClose}>
-      <div className="onvo-modal" onClick={e => e.stopPropagation()}>
-        <button className="onvo-modal__close" onClick={onClose} aria-label="Cerrar"><FaTimes /></button>
-        <div ref={containerRef} id="onvo-container" />
-      </div>
-    </div>
-  )
+  return null
 }
 
 // ── Cart drawer ──────────────────────────────────────────────────────────────
