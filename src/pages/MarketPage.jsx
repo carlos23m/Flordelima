@@ -177,6 +177,7 @@ function OnvoPayModal({ paymentIntentId, onClose, onResult, onError }) {
     window.onvo.pay({
       paymentIntentId,
       publicKey: ONVO_PUBLIC_KEY,
+      paymentType: 'card',
       container: containerRef.current,
       onSuccess: (result) => onResult(result),
       onError: (err) => { console.error('Onvo error:', err); onError(err) },
