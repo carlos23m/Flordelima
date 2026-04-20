@@ -2369,7 +2369,7 @@
 
 .market-footer-divider span {
   display: block;
-  width: min(480px, 60%);
-  height: 1px;
-  background: linear-gradient(90deg, transparent, rgba(200,169,110,0.5), rgba(82,183,136,0.5), transparent);
+  width: min(680px, 75%);
+  height: 2px;
+  background: linear-gradient(90deg, transparent, rgba(200,169,110,0.6), rgba(82,183,136,0.6), transparent);
 }
