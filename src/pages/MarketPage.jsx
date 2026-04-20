@@ -174,27 +174,18 @@ function OnvoPayModal({ paymentIntentId, onClose, onResult, onError }) {
 
   useEffect(() => {
     if (!paymentIntentId || !containerRef.current) return
-    console.log('[OnvoPayModal] window.onvo keys:', Object.keys(window.onvo))
-    console.log('[OnvoPayModal] calling window.onvo.pay...')
-    const result = window.onvo.pay({
+    console.log('[OnvoPayModal] calling window.onvo.pay + render...')
+    const instance = window.onvo.pay({
       paymentIntentId,
       publicKey: ONVO_PUBLIC_KEY,
       paymentType: 'card',
-      container: containerRef.current,
-      debug: true,
       onSuccess: (r) => { console.log('[OnvoPayModal] onSuccess:', r); onResult(r) },
       onError: (err) => { console.error('[OnvoPayModal] onError:', err); onError(err) },
       onClose: () => { console.log('[OnvoPayModal] onClose'); onClose() },
     })
-    console.log('[OnvoPayModal] pay() returned:', result)
-    if (result && typeof result.then === 'function') {
-      result.then(r => console.log('[OnvoPayModal] pay() promise resolved:', r))
-             .catch(e => console.error('[OnvoPayModal] pay() promise rejected:', e))
-    }
-    setTimeout(() => {
-      console.log('[OnvoPayModal] iframes in DOM:', document.querySelectorAll('iframe').length)
-      console.log('[OnvoPayModal] container innerHTML:', containerRef.current?.innerHTML?.slice(0, 200))
-    }, 1000)
+    instance.render(containerRef.current)
+      .then(() => console.log('[OnvoPayModal] render complete'))
+      .catch(e => console.error('[OnvoPayModal] render error:', e))
   }, [paymentIntentId, onClose, onResult, onError])
 
   return (
