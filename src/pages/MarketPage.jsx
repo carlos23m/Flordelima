@@ -345,6 +345,13 @@ function MarketCard({ product, qty, onAdd, onRemove }) {
 
 function OnvoPayModal({ paymentIntentId, onClose, onResult, onError }) {
   const containerRef = useRef(null)
+  const onCloseRef  = useRef(onClose)
+  const onResultRef = useRef(onResult)
+  const onErrorRef  = useRef(onError)
+
+  useEffect(() => { onCloseRef.current  = onClose  }, [onClose])
+  useEffect(() => { onResultRef.current = onResult }, [onResult])
+  useEffect(() => { onErrorRef.current  = onError  }, [onError])
 
   useEffect(() => {
     if (!paymentIntentId || !containerRef.current) return
@@ -352,13 +359,13 @@ function OnvoPayModal({ paymentIntentId, onClose, onResult, onError }) {
       paymentIntentId,
       publicKey: ONVO_PUBLIC_KEY,
       paymentType: 'one_time',
-      onSuccess: (r) => onResult(r),
-      onError: (err) => onError(err),
-      onClose: () => onClose(),
+      onSuccess: (r)   => onResultRef.current(r),
+      onError:   (err) => onErrorRef.current(err),
+      onClose:   ()    => onCloseRef.current(),
     })
     instance.render(containerRef.current)
       .catch(e => console.error('Onvo render error:', e))
-  }, [paymentIntentId, onClose, onResult, onError])
+  }, [paymentIntentId])
 
   return (
     <div

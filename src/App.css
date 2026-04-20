@@ -137,10 +137,10 @@
 }
 
 .navbar__logo {
-  height: 110px;
+  height: 150px;
   width: auto;
   display: block;
-  margin: -28px -10px;
+  margin: -40px -10px;
 }
 
 .navbar__links {
@@ -1378,9 +1378,9 @@
 }
 
 .market-hero__badge-logo {
-  height: 90px;
+  height: 130px;
   width: auto;
-  margin: -10px 0;
+  margin: -15px 0;
 }
 
 .market-hero__badge {
