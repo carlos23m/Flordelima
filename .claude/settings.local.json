@@ -10,7 +10,9 @@
       "WebFetch(domain:docs.onvopay.com)",
       "WebSearch",
       "WebFetch(domain:www.npmjs.com)",
-      "WebFetch(domain:github.com)"
+      "WebFetch(domain:github.com)",
+      "Bash(base64 -w 0 c:/Users/Usuario/my-react-app/public/logo3.jpg)",
+      "Read(//tmp/**)"
     ]
   }
 }
