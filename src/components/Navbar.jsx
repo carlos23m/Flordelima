@@ -35,7 +35,7 @@ export default function Navbar({ brand, links, brandHref = '/', cartCount, onCar
     <header className={`navbar${scrolled ? ' navbar--scrolled' : ''}${menuOpen ? ' navbar--open' : ''}`}>
       <div className="container navbar__inner">
         <a href={brandHref} className="navbar__brand" onClick={handleLinkClick}>
-          <img src="/logo.png" alt={brand} className="navbar__logo" />
+          <img src="/logo2.png" alt={brand} className="navbar__logo" />
           <div className="navbar__brand-text">
             <span className="navbar__brand-name">{brand}</span>
             <span className="navbar__brand-tagline">Productos Artesanales</span>
@@ -83,7 +83,7 @@ export default function Navbar({ brand, links, brandHref = '/', cartCount, onCar
 
       <nav className="navbar__mobile-nav" aria-label="Menú móvil" aria-hidden={!menuOpen}>
         <div className="navbar__mobile-nav-header">
-          <img src="/logo.png" alt={brand} className="navbar__mobile-nav-logo" />
+          <img src="/logo2.png" alt={brand} className="navbar__mobile-nav-logo" />
           <span className="navbar__mobile-nav-title">{brand}</span>
         </div>
         {links.map(({ href, label }) => (
