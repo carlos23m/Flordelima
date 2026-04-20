@@ -174,14 +174,15 @@ function OnvoPayModal({ paymentIntentId, onClose, onResult, onError }) {
 
   useEffect(() => {
     if (!paymentIntentId || !containerRef.current) return
+    console.log('[OnvoPayModal] calling window.onvo.pay with:', { paymentIntentId, publicKey: ONVO_PUBLIC_KEY, paymentType: 'card' })
     window.onvo.pay({
       paymentIntentId,
       publicKey: ONVO_PUBLIC_KEY,
       paymentType: 'card',
       container: containerRef.current,
-      onSuccess: (result) => onResult(result),
-      onError: (err) => { console.error('Onvo error:', err); onError(err) },
-      onClose,
+      onSuccess: (result) => { console.log('[OnvoPayModal] onSuccess result:', result); onResult(result) },
+      onError: (err) => { console.error('[OnvoPayModal] onError:', err); onError(err) },
+      onClose: () => { console.log('[OnvoPayModal] onClose'); onClose() },
     })
   }, [paymentIntentId, onClose, onResult, onError])
 
@@ -307,20 +308,27 @@ export default function MarketPage() {
     setOnvoStatus('loading')
     setOnvoErrorMsg('')
     try {
+      console.log('[OnvoPay] loading SDK...')
       await loadOnvoScript()
+      console.log('[OnvoPay] SDK loaded, window.onvo:', window.onvo)
+
+      console.log('[OnvoPay] creating payment intent, amount:', cartTotal)
       const res = await fetch('/api/create-payment-intent', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ amount: cartTotal, description: 'Pedido Flor de Lima' }),
       })
       const data = await res.json()
+      console.log('[OnvoPay] payment intent response:', res.status, data)
       if (!res.ok) throw new Error(data.error || 'Error al crear el pago')
+
+      console.log('[OnvoPay] opening modal with paymentIntentId:', data.id)
       setPaymentIntentId(data.id)
       setOnvoOpen(true)
       setOnvoStatus('idle')
       setCartOpen(false)
     } catch (err) {
-      console.error('handleOnvoPay:', err)
+      console.error('[OnvoPay] handleOnvoPay error:', err)
       setOnvoErrorMsg(err.message || 'Error al procesar el pago')
       setOnvoStatus('error')
     }
