@@ -46,7 +46,7 @@ const PRODUCTS = [
   },
   {
     id: 3,
-    title: 'Limón Mexicano',
+    title: 'Limón Mecino',
     description: 'Cosechados en plena madurez bajo el sol de Guácimo. Abundante jugo, aroma vibrante y ese frescor natural que eleva cualquier receta.',
     priceLabel: '₡100 / cada uno',
     priceNum: 100,
