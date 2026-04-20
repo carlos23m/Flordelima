@@ -1,0 +1,79 @@
+import { useState, useEffect } from 'react'
+import { FaBars, FaTimes, FaLeaf } from 'react-icons/fa'
+
+export default function Navbar({ brand, links }) {
+  const [scrolled, setScrolled] = useState(false)
+  const [menuOpen, setMenuOpen] = useState(false)
+
+  useEffect(() => {
+    const onScroll = () => setScrolled(window.scrollY > 60)
+    window.addEventListener('scroll', onScroll, { passive: true })
+    return () => window.removeEventListener('scroll', onScroll)
+  }, [])
+
+  useEffect(() => {
+    document.body.style.overflow = menuOpen ? 'hidden' : ''
+    return () => { document.body.style.overflow = '' }
+  }, [menuOpen])
+
+  const handleLinkClick = () => setMenuOpen(false)
+
+  return (
+    <header className={`navbar${scrolled ? ' navbar--scrolled' : ''}${menuOpen ? ' navbar--open' : ''}`}>
+      <div className="container navbar__inner">
+        <a href="#" className="navbar__brand" onClick={handleLinkClick}>
+          <FaLeaf className="navbar__leaf" aria-hidden="true" />
+          <span>{brand}</span>
+        </a>
+
+        <nav className="navbar__links" aria-label="Navegación principal">
+          {links.map(({ href, label }) => (
+            <a key={href} href={href} className="navbar__link" onClick={handleLinkClick}>
+              {label}
+            </a>
+          ))}
+          <a
+            href="https://wa.me/50688438492"
+            className="navbar__cta"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            Pedir Ahora
+          </a>
+        </nav>
+
+        <button
+          className="navbar__hamburger"
+          onClick={() => setMenuOpen(prev => !prev)}
+          aria-label={menuOpen ? 'Cerrar menú' : 'Abrir menú'}
+          aria-expanded={menuOpen}
+        >
+          {menuOpen ? <FaTimes /> : <FaBars />}
+        </button>
+      </div>
+
+      <div
+        className="navbar__mobile-overlay"
+        onClick={() => setMenuOpen(false)}
+        aria-hidden="true"
+      />
+
+      <nav className="navbar__mobile-nav" aria-label="Menú móvil" aria-hidden={!menuOpen}>
+        {links.map(({ href, label }) => (
+          <a key={href} href={href} className="navbar__mobile-link" onClick={handleLinkClick}>
+            {label}
+          </a>
+        ))}
+        <a
+          href="https://wa.me/50688438492"
+          className="navbar__mobile-cta"
+          target="_blank"
+          rel="noopener noreferrer"
+          onClick={handleLinkClick}
+        >
+          Pedir por WhatsApp
+        </a>
+      </nav>
+    </header>
+  )
+}
