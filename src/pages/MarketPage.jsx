@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useRef } from 'react'
 import { Card, CardContent, Box, Typography, Button } from '@mui/material'
 import {
   FaShoppingCart, FaTimes, FaPlus, FaMinus, FaWhatsapp,
@@ -170,21 +170,35 @@ function MarketCard({ product, qty, onAdd, onRemove }) {
 // ── Onvo Pay modal ───────────────────────────────────────────────────────────
 
 function OnvoPayModal({ paymentIntentId, onClose, onResult, onError }) {
+  const containerRef = useRef(null)
+
   useEffect(() => {
-    if (!paymentIntentId) return
+    if (!paymentIntentId || !containerRef.current) return
     console.log('[OnvoPayModal] calling window.onvo.pay with:', { paymentIntentId, publicKey: ONVO_PUBLIC_KEY, paymentType: 'card' })
     window.onvo.pay({
       paymentIntentId,
       publicKey: ONVO_PUBLIC_KEY,
       paymentType: 'card',
-      container: document.body,
+      container: containerRef.current,
+      debug: true,
       onSuccess: (result) => { console.log('[OnvoPayModal] onSuccess result:', result); onResult(result) },
       onError: (err) => { console.error('[OnvoPayModal] onError:', err); onError(err) },
       onClose: () => { console.log('[OnvoPayModal] onClose'); onClose() },
     })
   }, [paymentIntentId, onClose, onResult, onError])
 
-  return null
+  return (
+    <div
+      ref={containerRef}
+      style={{
+        position: 'fixed',
+        inset: 0,
+        zIndex: 9999,
+        width: '100vw',
+        height: '100vh',
+      }}
+    />
+  )
 }
 
 // ── Cart drawer ──────────────────────────────────────────────────────────────
