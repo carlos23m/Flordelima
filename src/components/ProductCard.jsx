@@ -7,6 +7,7 @@ export default function ProductCard({
   title,
   description,
   image,
+  price,
   whatsappMsg,
   category = 'dairy',
   onViewDetails,
@@ -98,11 +99,32 @@ export default function ProductCard({
             lineHeight: 1.75,
             fontSize: '0.88rem',
             flexGrow: 1,
-            mb: 3,
+            mb: price ? 2 : 3,
           }}
         >
           {description}
         </Typography>
+
+        {price && (
+          <Box sx={{
+            pt: 2,
+            mb: 2.5,
+            borderTop: '1px solid #e8e4dc',
+            display: 'flex',
+            alignItems: 'baseline',
+            gap: '6px',
+          }}>
+            <Typography sx={{
+              fontFamily: "'Playfair Display', Georgia, serif",
+              fontWeight: 700,
+              fontSize: '1.45rem',
+              color: accentColor,
+              lineHeight: 1,
+            }}>
+              {price}
+            </Typography>
+          </Box>
+        )}
 
         <Stack direction={{ xs: 'column', sm: 'row' }} spacing={1.5}>
           <Button

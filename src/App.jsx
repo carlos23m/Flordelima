@@ -82,7 +82,7 @@ function App() {
     stat2Desc: 'De tierras cultivadas y pasturas naturales',
     stat3Title: '100% Natural',
     stat3Desc: 'Sin químicos sintéticos ni aditivos innecesarios',
-    stat4Title: '5 Productos',
+    stat4Title: '6 Productos',
     stat4Desc: 'De excelencia artesanal verificada',
     valuesTitle: 'Lo Que Nos Define',
     familyValue: 'Tradición Familiar',
@@ -96,6 +96,51 @@ function App() {
     facebook: 'Facebook',
     whatsapp: 'WhatsApp',
   }
+
+  const products = [
+    {
+      title: 'Leche de Vaca',
+      description: text.wholeMilkDesc,
+      price: '₡1,200 / litro',
+      category: 'dairy',
+      image: 'https://images.unsplash.com/photo-1550583724-b2692b85b150?auto=format&fit=crop&w=600&q=80',
+    },
+    {
+      title: 'Queso Artesanal de Vaca',
+      description: text.lowFatMilkDesc,
+      price: '₡4,500 / 500g',
+      category: 'dairy',
+      image: 'https://images.unsplash.com/photo-1486297678162-eb2a19b0a318?auto=format&fit=crop&w=600&q=80',
+    },
+    {
+      title: 'Limón Mexicano',
+      description: text.lactoseFreeMilkDesc,
+      price: '₡800 / kg',
+      category: 'citrus',
+      image: 'https://images.unsplash.com/photo-1587049352846-4a222e784d38?auto=format&fit=crop&w=600&q=80',
+    },
+    {
+      title: 'Leche de Cabra',
+      description: text.product4Desc,
+      price: '₡1,800 / litro',
+      category: 'dairy',
+      image: 'https://images.unsplash.com/photo-1563636619-e9143da7973b?auto=format&fit=crop&w=600&q=80',
+    },
+    {
+      title: 'Queso Artesanal de Cabra',
+      description: text.product5Desc,
+      price: '₡5,500 / 250g',
+      category: 'dairy',
+      image: 'https://images.unsplash.com/photo-1452195100486-9cc805987862?auto=format&fit=crop&w=600&q=80',
+    },
+    {
+      title: 'Jabón Artesanal de Leche',
+      description: 'Jabón natural elaborado con leche de cabra de nuestra finca. Rico en vitaminas y minerales, hidrata y suaviza la piel profundamente. Sin parabenos ni sulfatos. Un lujo artesanal de Finca Flordelima.',
+      price: '₡3,500 / unidad',
+      category: 'dairy',
+      image: 'https://images.unsplash.com/photo-1608248543803-ba4f8c70ae0b?auto=format&fit=crop&w=600&q=80',
+    },
+  ]
 
   const navLinks = [
     { href: '#products', label: text.navProducts },
@@ -150,21 +195,11 @@ function App() {
               <h2>{text.chooseMilk}</h2>
             </div>
             <div className="product-grid">
-              <div className="reveal-scale reveal-delay-1">
-                <ProductCard title={text.wholeMilk} description={text.wholeMilkDesc} category="dairy" />
-              </div>
-              <div className="reveal-scale reveal-delay-2">
-                <ProductCard title={text.lowFatMilk} description={text.lowFatMilkDesc} category="dairy" />
-              </div>
-              <div className="reveal-scale reveal-delay-3">
-                <ProductCard title={text.lactoseFreeMilk} description={text.lactoseFreeMilkDesc} category="citrus" />
-              </div>
-              <div className="reveal-scale reveal-delay-4">
-                <ProductCard title={text.product4} description={text.product4Desc} category="dairy" />
-              </div>
-              <div className="reveal-scale reveal-delay-5">
-                <ProductCard title={text.product5} description={text.product5Desc} category="dairy" />
-              </div>
+              {products.map((product, i) => (
+                <div key={product.title} className={`reveal-scale reveal-delay-${i + 1}`}>
+                  <ProductCard {...product} />
+                </div>
+              ))}
             </div>
           </div>
         </section>
