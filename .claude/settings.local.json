@@ -6,7 +6,11 @@
       "Bash(git merge *)",
       "Bash(git push *)",
       "Bash(git stash *)",
-      "Bash(npm install *)"
+      "Bash(npm install *)",
+      "WebFetch(domain:docs.onvopay.com)",
+      "WebSearch",
+      "WebFetch(domain:www.npmjs.com)",
+      "WebFetch(domain:github.com)"
     ]
   }
 }
