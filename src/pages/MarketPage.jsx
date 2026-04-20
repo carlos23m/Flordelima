@@ -174,18 +174,16 @@ function OnvoPayModal({ paymentIntentId, onClose, onResult, onError }) {
 
   useEffect(() => {
     if (!paymentIntentId || !containerRef.current) return
-    console.log('[OnvoPayModal] calling window.onvo.pay + render...')
     const instance = window.onvo.pay({
       paymentIntentId,
       publicKey: ONVO_PUBLIC_KEY,
       paymentType: 'one_time',
-      onSuccess: (r) => { console.log('[OnvoPayModal] onSuccess:', r); onResult(r) },
-      onError: (err) => { console.error('[OnvoPayModal] onError:', err); onError(err) },
-      onClose: () => { console.log('[OnvoPayModal] onClose'); onClose() },
+      onSuccess: (r) => onResult(r),
+      onError: (err) => onError(err),
+      onClose: () => onClose(),
     })
     instance.render(containerRef.current)
-      .then(() => console.log('[OnvoPayModal] render complete'))
-      .catch(e => console.error('[OnvoPayModal] render error:', e))
+      .catch(e => console.error('Onvo render error:', e))
   }, [paymentIntentId, onClose, onResult, onError])
 
   return (
@@ -314,27 +312,19 @@ export default function MarketPage() {
     setOnvoStatus('loading')
     setOnvoErrorMsg('')
     try {
-      console.log('[OnvoPay] loading SDK...')
       await loadOnvoScript()
-      console.log('[OnvoPay] SDK loaded, window.onvo:', window.onvo)
-
-      console.log('[OnvoPay] creating payment intent, amount:', cartTotal)
       const res = await fetch('/api/create-payment-intent', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ amount: cartTotal, description: 'Pedido Flor de Lima' }),
       })
       const data = await res.json()
-      console.log('[OnvoPay] payment intent response:', res.status, data)
       if (!res.ok) throw new Error(data.error || 'Error al crear el pago')
-
-      console.log('[OnvoPay] opening modal with paymentIntentId:', data.id)
       setPaymentIntentId(data.id)
       setOnvoOpen(true)
       setOnvoStatus('idle')
       setCartOpen(false)
     } catch (err) {
-      console.error('[OnvoPay] handleOnvoPay error:', err)
       setOnvoErrorMsg(err.message || 'Error al procesar el pago')
       setOnvoStatus('error')
     }
