@@ -136,9 +136,10 @@
   color: var(--color-primary-mid);
 }
 
-.navbar__leaf {
-  color: var(--color-gold);
-  font-size: 1.05rem;
+.navbar__logo {
+  height: 40px;
+  width: auto;
+  display: block;
 }
 
 .navbar__links {

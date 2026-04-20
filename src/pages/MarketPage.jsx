@@ -485,6 +485,7 @@ export default function MarketPage() {
     if (result?.status === 'succeeded') {
       setOnvoStatus('success')
       persistTransaction('succeeded', result)
+      setCart({})
     } else {
       setOnvoStatus('declined')
       setOnvoErrorMsg('Tu tarjeta fue rechazada. Por favor intenta con otra tarjeta.')

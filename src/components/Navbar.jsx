@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react'
-import { FaBars, FaTimes, FaLeaf, FaShoppingCart } from 'react-icons/fa'
+import { FaBars, FaTimes, FaShoppingCart } from 'react-icons/fa'
 
-export default function Navbar({ brand, links, brandHref = '/', cartCount, onCartOpen }) {
+export default function Navbar({ links, brandHref = '/', cartCount, onCartOpen }) {
   const [scrolled, setScrolled] = useState(false)
   const [menuOpen, setMenuOpen] = useState(false)
 
@@ -24,8 +24,7 @@ export default function Navbar({ brand, links, brandHref = '/', cartCount, onCar
     <header className={`navbar${scrolled ? ' navbar--scrolled' : ''}${menuOpen ? ' navbar--open' : ''}`}>
       <div className="container navbar__inner">
         <a href={brandHref} className="navbar__brand" onClick={handleLinkClick}>
-          <FaLeaf className="navbar__leaf" aria-hidden="true" />
-          <span>{brand}</span>
+          <img src="/logo.png" alt="Flordelima" className="navbar__logo" />
         </a>
 
         <nav className="navbar__links" aria-label="Navegación principal">
