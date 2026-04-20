@@ -152,6 +152,27 @@ function App() {
     return () => observer.disconnect()
   }, [])
 
+  const storyValuesRef = useRef(null)
+  useEffect(() => {
+    const container = storyValuesRef.current
+    if (!container) return
+    if (!('IntersectionObserver' in window)) {
+      container.querySelectorAll('.reveal').forEach(el => el.classList.add('is-visible'))
+      return
+    }
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          container.querySelectorAll('.reveal').forEach(el => el.classList.add('is-visible'))
+          observer.unobserve(container)
+        }
+      },
+      { threshold: 0.05, rootMargin: '0px 0px -40px 0px' }
+    )
+    observer.observe(container)
+    return () => observer.disconnect()
+  }, [])
+
   const heroRef     = useScrollReveal({ threshold: 0.05 })
   const productsRef = useScrollReveal({ threshold: 0.05 })
   const storyRef    = useScrollReveal({ threshold: 0.08 })
@@ -212,7 +233,7 @@ function App() {
                 <h2>{text.storyTitle}</h2>
                 <p>{text.storyText}</p>
               </div>
-              <div className="story-values">
+              <div className="story-values" ref={storyValuesRef}>
                 <article className="story-value-card reveal reveal-delay-1">
                   <FaSeedling className="story-value-icon" aria-hidden="true" />
                   <h3>{text.pastureFirst}</h3>
