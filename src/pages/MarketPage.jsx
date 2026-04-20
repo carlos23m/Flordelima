@@ -781,6 +781,10 @@ export default function MarketPage() {
         onClose={resetOnvo}
       />
 
+      <div className="market-footer-divider" aria-hidden="true">
+        <span />
+      </div>
+
       <Footer
         brand="Finca Flordelima"
         phone="8843-8492"
