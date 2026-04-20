@@ -111,7 +111,7 @@ export default async function handler(req, res) {
 
   try {
     await resend.emails.send({
-      from: 'Finca Flordelima <recibos@flordelima.com>',
+      from: 'Finca Flordelima <onboarding@resend.dev>',
       to: client.email,
       subject: '¡Tu pedido fue confirmado! – Finca Flordelima',
       html: buildEmailHtml({ client, items, total, paymentIntentId }),
