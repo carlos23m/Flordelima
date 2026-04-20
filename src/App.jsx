@@ -79,7 +79,7 @@ function App() {
     statsTitle: 'Más de 30 años produciendo los mejores limones, leche y queso artesanal de Costa Rica',
     stat1Title: '3 Generaciones',
     stat1Desc: 'De legado familiar y compromiso inquebrantable',
-    stat2Title: '50+ Hectáreas',
+    stat2Title: '10+ Hectáreas',
     stat2Desc: 'De tierras cultivadas y pasturas naturales',
     stat3Title: '100% Natural',
     stat3Desc: 'Sin químicos sintéticos ni aditivos innecesarios',
@@ -148,6 +148,7 @@ function App() {
     { href: '#story',    label: text.navStory },
     { href: '#location', label: text.navLocation },
     { href: '#contact',  label: text.navContact },
+    { href: '/tienda',   label: 'Tienda' },
   ]
 
   const productGridRef = useRef(null)

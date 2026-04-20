@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react'
-import { FaBars, FaTimes, FaLeaf } from 'react-icons/fa'
+import { FaBars, FaTimes, FaLeaf, FaShoppingCart } from 'react-icons/fa'
 
-export default function Navbar({ brand, links }) {
+export default function Navbar({ brand, links, brandHref = '/', cartCount, onCartOpen }) {
   const [scrolled, setScrolled] = useState(false)
   const [menuOpen, setMenuOpen] = useState(false)
 
@@ -18,10 +18,12 @@ export default function Navbar({ brand, links }) {
 
   const handleLinkClick = () => setMenuOpen(false)
 
+  const showCart = typeof cartCount === 'number'
+
   return (
     <header className={`navbar${scrolled ? ' navbar--scrolled' : ''}${menuOpen ? ' navbar--open' : ''}`}>
       <div className="container navbar__inner">
-        <a href="#" className="navbar__brand" onClick={handleLinkClick}>
+        <a href={brandHref} className="navbar__brand" onClick={handleLinkClick}>
           <FaLeaf className="navbar__leaf" aria-hidden="true" />
           <span>{brand}</span>
         </a>
@@ -32,14 +34,21 @@ export default function Navbar({ brand, links }) {
               {label}
             </a>
           ))}
-          <a
-            href="https://wa.me/50688438492"
-            className="navbar__cta"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Pedir Ahora
-          </a>
+          {showCart ? (
+            <button className="navbar__cart-btn" onClick={onCartOpen} aria-label="Abrir carrito">
+              <FaShoppingCart />
+              {cartCount > 0 && <span className="navbar__cart-badge">{cartCount}</span>}
+            </button>
+          ) : (
+            <a
+              href="https://wa.me/50688438492"
+              className="navbar__cta"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              Pedir Ahora
+            </a>
+          )}
         </nav>
 
         <button
@@ -64,15 +73,25 @@ export default function Navbar({ brand, links }) {
             {label}
           </a>
         ))}
-        <a
-          href="https://wa.me/50688438492"
-          className="navbar__mobile-cta"
-          target="_blank"
-          rel="noopener noreferrer"
-          onClick={handleLinkClick}
-        >
-          Pedir por WhatsApp
-        </a>
+        {showCart ? (
+          <button
+            className="navbar__mobile-cta"
+            onClick={() => { handleLinkClick(); onCartOpen?.() }}
+          >
+            <FaShoppingCart style={{ marginRight: 8 }} />
+            Ver carrito {cartCount > 0 && `(${cartCount})`}
+          </button>
+        ) : (
+          <a
+            href="https://wa.me/50688438492"
+            className="navbar__mobile-cta"
+            target="_blank"
+            rel="noopener noreferrer"
+            onClick={handleLinkClick}
+          >
+            Pedir por WhatsApp
+          </a>
+        )}
       </nav>
     </header>
   )
