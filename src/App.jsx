@@ -1,6 +1,5 @@
 import { useRef, useEffect } from 'react'
 import './App.css'
-import ProductCard from './components/ProductCard'
 import Navbar from './components/Navbar'
 import Footer from './components/Footer'
 import { useScrollReveal } from './hooks/useScrollReveal'
@@ -32,20 +31,18 @@ function App() {
     heroTitle: 'Sabores auténticos, elaborados con amor en el corazón de Costa Rica',
     heroText:
       'En Flor de Lima cultivamos la paciencia, el respeto por la tierra y la pasión por los sabores genuinos. Cada producto nace de manos que conocen el campo, de animales criados con cuidado y de una familia que lleva más de tres décadas comprometida con la excelencia artesanal.',
-    viewMilk: 'Ver Productos',
+    viewProducts: 'Explorar Tienda',
     meetRanch: 'Nuestra Historia',
-    freshOfferings: 'Cosechado y elaborado en la finca',
-    chooseMilk: 'Productos que cuentan una historia — elaborados a pequeña escala, con ingredientes frescos y tiempo de sobra',
-    wholeMilk: 'Leche de Vaca',
-    wholeMilkDesc: 'Recogida cada mañana de nuestras vacas que pastan en libertad, esta leche llega a tu hogar con toda su cremosidad intacta. Sin atajos, sin aditivos — solo la pureza que la naturaleza ofrece.',
-    lowFatMilk: 'Queso Artesanal de Vaca',
-    lowFatMilkDesc: 'Elaborado en pequeños lotes con leche fresca de nuestra finca y recetas que han pasado de mano en mano. Su textura suave y sabor profundo son el resultado de paciencia y auténtico cuidado artesanal.',
-    lactoseFreeMilk: 'Limón Mexicano',
-    lactoseFreeMilkDesc: 'Cosechados en plena madurez bajo el sol de Guácimo, nuestros limones destacan por su jugo abundante y aroma intenso. Perfectos para elevar cualquier receta con ese toque fresco e inconfundible.',
-    product4: 'Leche de Cabra',
-    product4Desc: 'Más suave y fácil de digerir, con una riqueza nutritiva excepcional. Proviene de nuestras cabras criadas en libertad, con alimento natural y el cuidado constante de nuestra familia.',
-    product5: 'Queso Artesanal de Cabra',
-    product5Desc: 'Cremoso, delicado y de carácter único. Elaborado artesanalmente con leche de cabra fresca, es la elección perfecta para tablas gourmet y quienes buscan sabores genuinamente distintos.',
+    storeEyebrow: 'Nuestra Tienda',
+    storeTitle: 'Todos nuestros productos, a un clic de distancia',
+    storeDesc: 'Explora nuestra selección de lácteos frescos, cítricos de temporada y productos artesanales. Haz tu pedido directamente por WhatsApp y recíbelo con el sabor genuino de la finca.',
+    storeCta: 'Ir a la Tienda',
+    storeCat1: 'Lácteos',
+    storeCat1Desc: 'Leche fresca y quesos artesanales de vaca y cabra.',
+    storeCat2: 'Cítricos',
+    storeCat2Desc: 'Limones cosechados en plena madurez bajo el sol de Guácimo.',
+    storeCat3: 'Artesanales',
+    storeCat3Desc: 'Jabones naturales elaborados con leche de cabra y aceites de la finca.',
     ranchStory: 'Nuestra Historia',
     storyTitle: 'Más de tres décadas cultivando la tierra con respeto, amor y propósito.',
     storyText:
@@ -81,51 +78,6 @@ function App() {
     tiktok: 'TikTok',
   }
 
-  const products = [
-    {
-      title: 'Leche de Vaca',
-      description: text.wholeMilkDesc,
-      price: '₡1,200 / litro',
-      category: 'dairy',
-      image: 'https://images.unsplash.com/photo-1550583724-b2692b85b150?auto=format&fit=crop&w=600&q=80',
-    },
-    {
-      title: 'Queso Artesanal de Vaca',
-      description: text.lowFatMilkDesc,
-      price: '₡4,500 / 500g',
-      category: 'dairy',
-      image: 'https://i.pinimg.com/736x/7e/da/bd/7edabd212cd93ea6a37a299f864f9d3f.jpg',
-    },
-    {
-      title: 'Limón Mecino',
-      description: text.lactoseFreeMilkDesc,
-      price: '₡100 / cada uno',
-      category: 'citrus',
-      image: 'https://i.pinimg.com/1200x/78/50/96/7850969af6fb06260934cebf95030bda.jpg',
-    },
-    {
-      title: 'Leche de Cabra',
-      description: text.product4Desc,
-      price: '₡4,500 / litro',
-      category: 'dairy',
-      image: 'https://i.pinimg.com/1200x/ea/5e/9d/ea5e9dd947880973977a1af126b29d6d.jpg',
-    },
-    {
-      title: 'Queso Artesanal de Cabra',
-      description: text.product5Desc,
-      price: '₡5,500 / 250g',
-      category: 'dairy',
-      image: 'https://i.pinimg.com/736x/49/af/a9/49afa92a6b2415973544d308e4ee76fd.jpg',
-    },
-    {
-      title: 'Jabón Artesanal de Leche',
-      description: 'Formulado con leche de cabra fresca y aceites naturales de la finca. Nutre, hidrata y protege la piel sin ingredientes agresivos. Un regalo genuino de la naturaleza, hecho con las mismas manos que cuidan nuestra tierra.',
-      price: '₡4,500 / unidad',
-      category: 'artisanal',
-      image: 'https://i.pinimg.com/736x/f3/69/db/f369dbe53d10e315a26b5671898f5ca6.jpg',
-    },
-  ]
-
   const navLinks = [
     { href: '#products', label: text.navProducts },
     { href: '#story',    label: text.navStory },
@@ -133,27 +85,6 @@ function App() {
     { href: '#contact',  label: text.navContact },
     { href: '/tienda',   label: 'Tienda' },
   ]
-
-  const productGridRef = useRef(null)
-  useEffect(() => {
-    const grid = productGridRef.current
-    if (!grid) return
-    if (!('IntersectionObserver' in window)) {
-      grid.querySelectorAll('.reveal-scale').forEach(el => el.classList.add('is-visible'))
-      return
-    }
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        if (entry.isIntersecting) {
-          grid.querySelectorAll('.reveal-scale').forEach(el => el.classList.add('is-visible'))
-          observer.unobserve(grid)
-        }
-      },
-      { threshold: 0.05, rootMargin: '0px 0px -40px 0px' }
-    )
-    observer.observe(grid)
-    return () => observer.disconnect()
-  }, [])
 
   const storyValuesRef = useRef(null)
   useEffect(() => {
@@ -198,7 +129,7 @@ function App() {
                 <h1>{text.heroTitle}</h1>
                 <p className="hero-body">{text.heroText}</p>
                 <div className="hero-actions">
-                  <a href="#products" className="btn btn-primary">{text.viewMilk}</a>
+                  <a href="#products" className="btn btn-primary">{text.viewProducts}</a>
                   <a href="#story" className="btn btn-secondary">{text.meetRanch}</a>
                 </div>
               </div>
@@ -211,19 +142,33 @@ function App() {
             </div>
           </div>
         </section>
-        {/* ── Products ── */}
-        <section id="products" className="products-section">
+        {/* ── Store Promo ── */}
+        <section id="products" className="store-promo-section">
           <div className="container">
-            <div ref={productsRef} className="section-head reveal">
-              <span className="section-eyebrow">{text.freshOfferings}</span>
-              <h2>{text.chooseMilk}</h2>
-            </div>
-            <div className="product-grid" ref={productGridRef}>
-              {products.map((product, i) => (
-                <div key={product.title} className={`reveal-scale reveal-delay-${i + 1}`}>
-                  <ProductCard {...product} />
+            <div ref={productsRef} className="store-promo-inner reveal">
+              <div className="store-promo-copy">
+                <span className="section-eyebrow">{text.storeEyebrow}</span>
+                <h2>{text.storeTitle}</h2>
+                <p>{text.storeDesc}</p>
+                <a href="/tienda" className="btn btn-primary btn-large">{text.storeCta}</a>
+              </div>
+              <div className="store-promo-categories">
+                <div className="store-cat-card">
+                  <div className="store-cat-icon"><FaIndustry /></div>
+                  <h3>{text.storeCat1}</h3>
+                  <p>{text.storeCat1Desc}</p>
                 </div>
-              ))}
+                <div className="store-cat-card">
+                  <div className="store-cat-icon"><FaSeedling /></div>
+                  <h3>{text.storeCat2}</h3>
+                  <p>{text.storeCat2Desc}</p>
+                </div>
+                <div className="store-cat-card">
+                  <div className="store-cat-icon"><FaShieldAlt /></div>
+                  <h3>{text.storeCat3}</h3>
+                  <p>{text.storeCat3Desc}</p>
+                </div>
+              </div>
             </div>
           </div>
         </section>

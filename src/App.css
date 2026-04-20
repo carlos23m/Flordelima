@@ -503,33 +503,95 @@
 
 /* ── Products ────────────────────────────── */
 
-.products-section {
+/* ── Store Promo ─────────────────────────── */
+
+.store-promo-section {
   padding: var(--space-section) 0;
   background: var(--color-bg);
 }
 
-.product-grid {
+.store-promo-inner {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 24px;
-  margin-top: 56px;
-  align-items: stretch;
+  grid-template-columns: 1fr 1fr;
+  gap: 64px;
+  align-items: center;
 }
 
-.product-grid > div {
+.store-promo-copy {
   display: flex;
   flex-direction: column;
+  gap: 20px;
 }
 
-@media (max-width: 900px) {
-  .product-grid {
-    grid-template-columns: repeat(2, 1fr);
-  }
+.store-promo-copy h2 {
+  font-family: var(--font-heading);
+  font-size: clamp(1.75rem, 3vw, 2.5rem);
+  color: var(--color-heading);
+  line-height: 1.2;
+  margin: 0;
 }
 
-@media (max-width: 560px) {
-  .product-grid {
+.store-promo-copy p {
+  font-size: 1.05rem;
+  color: var(--color-text-muted);
+  line-height: 1.7;
+  margin: 0;
+}
+
+.store-promo-categories {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.store-cat-card {
+  display: flex;
+  align-items: flex-start;
+  gap: 16px;
+  padding: 20px 24px;
+  background: white;
+  border-radius: 12px;
+  border: 1px solid var(--color-border, #e8ede9);
+  box-shadow: 0 2px 12px rgba(45, 106, 79, 0.06);
+  transition: transform 0.2s var(--ease-out-expo), box-shadow 0.2s;
+}
+
+.store-cat-card:hover {
+  transform: translateY(-3px);
+  box-shadow: var(--shadow-md);
+}
+
+.store-cat-icon {
+  flex-shrink: 0;
+  width: 44px;
+  height: 44px;
+  border-radius: 10px;
+  background: var(--color-primary-soft);
+  color: var(--color-primary);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.2rem;
+}
+
+.store-cat-card h3 {
+  font-family: var(--font-heading);
+  font-size: 1.05rem;
+  color: var(--color-heading);
+  margin: 0 0 4px;
+}
+
+.store-cat-card p {
+  font-size: 0.9rem;
+  color: var(--color-text-muted);
+  margin: 0;
+  line-height: 1.5;
+}
+
+@media (max-width: 860px) {
+  .store-promo-inner {
     grid-template-columns: 1fr;
+    gap: 40px;
   }
 }
 
