@@ -175,11 +175,12 @@ function OnvoPayModal({ paymentIntentId, onClose, onResult, onError }) {
   useEffect(() => {
     if (!paymentIntentId || !containerRef.current) return
     console.log('[OnvoPayModal] calling window.onvo.pay with:', { paymentIntentId, publicKey: ONVO_PUBLIC_KEY, paymentType: 'card' })
+    console.log('[OnvoPayModal] container element:', containerRef.current)
     window.onvo.pay({
       paymentIntentId,
       publicKey: ONVO_PUBLIC_KEY,
       paymentType: 'card',
-      container: containerRef.current,
+      container: '#onvo-container',
       onSuccess: (result) => { console.log('[OnvoPayModal] onSuccess result:', result); onResult(result) },
       onError: (err) => { console.error('[OnvoPayModal] onError:', err); onError(err) },
       onClose: () => { console.log('[OnvoPayModal] onClose'); onClose() },
