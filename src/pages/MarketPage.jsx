@@ -205,7 +205,7 @@ function ClientInfoForm({ open, initialData, onSubmit, onClose }) {
 
 function TransactionSummary({ open, status, client, items, total, onClose }) {
   if (!open) return null
-  const succeeded = status === 'succeeded'
+  const succeeded = status === 'success'
   return (
     <div className="onvo-modal-overlay">
       <div className={`onvo-modal tx-summary${succeeded ? ' onvo-modal--success' : ' onvo-modal--error'}`}>
