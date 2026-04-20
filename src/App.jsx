@@ -22,7 +22,7 @@ function StatItem({ number, label, desc }) {
 
 function App() {
   const text = {
-    brand: 'Flordelima',
+    brand: 'Finca Flordelima',
     navProducts: 'Productos',
     navStory: 'Historia',
     navContact: 'Contacto',
