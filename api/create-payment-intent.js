@@ -10,7 +10,7 @@ export default async function handler(req, res) {
   }
 
   try {
-    const response = await fetch('https://api.dev.onvopay.com/v1/payment-intents', {
+    const response = await fetch('https://api.onvopay.com/v1/payment-intents', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
