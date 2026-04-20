@@ -611,7 +611,9 @@ export default function MarketPage() {
             </div>
             <div className="market-hero__badge">
               <img src="/logo.png" alt="Flordelima" className="market-hero__badge-logo" />
-              <span>100% Artesanal</span>
+              <div className="market-hero__badge-divider" />
+              <span className="market-hero__badge-label">100% Artesanal</span>
+              <span className="market-hero__badge-sub">Guácimo, Limón · Costa Rica</span>
             </div>
           </div>
         </section>
