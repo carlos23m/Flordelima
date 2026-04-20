@@ -2321,3 +2321,27 @@
   padding-top: 8px;
   color: var(--color-dark);
 }
+
+.tx-summary__email-btn {
+  width: 100%;
+  padding: 11px 16px;
+  border-radius: 8px;
+  border: 1.5px solid #40916c;
+  background: transparent;
+  color: #40916c;
+  font-family: var(--font-body);
+  font-size: 0.88rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.2s, color 0.2s;
+  margin-bottom: 8px;
+}
+.tx-summary__email-btn:hover:not(:disabled) {
+  background: #f0faf3;
+}
+.tx-summary__email-btn:disabled {
+  cursor: default;
+  border-color: #b7dfc8;
+  color: #2d6a4f;
+  background: #f0faf3;
+}

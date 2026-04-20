@@ -203,7 +203,23 @@ function ClientInfoForm({ open, initialData, onSubmit, onClose }) {
 
 // ── Transaction summary modal ────────────────────────────────────────────────
 
-function TransactionSummary({ open, status, client, items, total, onClose }) {
+function TransactionSummary({ open, status, client, items, total, paymentIntentId, onClose }) {
+  const [emailState, setEmailState] = useState('idle') // idle | loading | sent | error
+
+  const sendReceipt = async () => {
+    setEmailState('loading')
+    try {
+      const res = await fetch('/api/send-receipt', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ client, items, total, paymentIntentId }),
+      })
+      setEmailState(res.ok ? 'sent' : 'error')
+    } catch {
+      setEmailState('error')
+    }
+  }
+
   if (!open) return null
   const succeeded = status === 'success'
   return (
@@ -255,6 +271,19 @@ function TransactionSummary({ open, status, client, items, total, onClose }) {
               <span>{total.toLocaleString('es-CR', { style: 'currency', currency: 'CRC', maximumFractionDigits: 0 })}</span>
             </div>
           </div>
+        )}
+
+        {succeeded && client?.email && (
+          <button
+            className="tx-summary__email-btn"
+            onClick={sendReceipt}
+            disabled={emailState === 'loading' || emailState === 'sent'}
+          >
+            {emailState === 'loading' && 'Enviando…'}
+            {emailState === 'sent'    && '✓ Recibo enviado a ' + client.email}
+            {emailState === 'error'   && 'Error al enviar — Reintentar'}
+            {emailState === 'idle'    && '✉ Enviar recibo por correo'}
+          </button>
         )}
 
         <button className="cart-onvo-btn" onClick={onClose}>Cerrar</button>
@@ -722,11 +751,13 @@ export default function MarketPage() {
       )}
 
       <TransactionSummary
+        key={summaryOpen ? pendingPaymentIntentId : 'closed'}
         open={summaryOpen}
         status={onvoStatus}
         client={clientInfo}
         items={pendingCartItems.map(({ product, qty }) => ({ ...product, qty }))}
         total={pendingTotal}
+        paymentIntentId={pendingPaymentIntentId}
         onClose={resetOnvo}
       />
 
