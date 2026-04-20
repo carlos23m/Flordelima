@@ -10,7 +10,7 @@ const PRODUCTS = [
   {
     id: 1,
     title: 'Leche de Vaca',
-    description: 'Leche fresca pasteurizada de nuestras vacas alimentadas naturalmente. Rica en nutrientes, cremosa y con un sabor incomparable.',
+    description: 'Recogida cada mañana y pasteurizada en la finca. Cremosa, pura y llena del sabor que solo da la leche de vacas que pastan en libertad.',
     priceLabel: '₡1,200 / litro',
     priceNum: 1200,
     category: 'dairy',
@@ -19,7 +19,7 @@ const PRODUCTS = [
   {
     id: 2,
     title: 'Queso Artesanal de Vaca',
-    description: 'Queso artesanal elaborado con técnicas tradicionales usando nuestra leche de vaca premium. Textura suave y sabor profundo.',
+    description: 'Elaborado en pequeños lotes con leche fresca de nuestra finca. Textura suave, sabor profundo y un proceso completamente artesanal, sin apuros.',
     priceLabel: '₡4,500 / 500g',
     priceNum: 4500,
     category: 'dairy',
@@ -27,8 +27,8 @@ const PRODUCTS = [
   },
   {
     id: 3,
-    title: 'Limón Mecino',
-    description: 'Limones frescos y jugosos cosechados en el punto exacto de maduración. Perfectos para bebidas, cocina gourmet y repostería.',
+    title: 'Limón Mexicano',
+    description: 'Cosechados en plena madurez bajo el sol de Guácimo. Abundante jugo, aroma vibrante y ese frescor natural que eleva cualquier receta.',
     priceLabel: '₡100 / cada uno',
     priceNum: 100,
     category: 'citrus',
@@ -37,7 +37,7 @@ const PRODUCTS = [
   {
     id: 4,
     title: 'Leche de Cabra',
-    description: 'Leche delicada y nutritiva de nuestras cabras criadas con amor. Más digerible que la leche de vaca, con un sabor suave y característico.',
+    description: 'Más digestible y rica en nutrientes. Proviene de nuestras cabras criadas al aire libre, con alimento natural y el cuidado diario de nuestra familia.',
     priceLabel: '₡3,000 / litro',
     priceNum: 3000,
     category: 'dairy',
@@ -46,7 +46,7 @@ const PRODUCTS = [
   {
     id: 5,
     title: 'Queso Artesanal de Cabra',
-    description: 'Queso cremoso y refinado producido artesanalmente. Su sabor único y textura sedosa lo hacen ideal para tablas de quesos y maridajes.',
+    description: 'De carácter único y sabor inconfundible. Elaborado artesanalmente con leche de cabra fresca, ideal para tablas gourmet y maridajes especiales.',
     priceLabel: '₡5,500 / 250g',
     priceNum: 5500,
     category: 'dairy',
@@ -54,8 +54,8 @@ const PRODUCTS = [
   },
   {
     id: 6,
-    title: 'Jabón Artesanal',
-    description: 'Jabón natural elaborado en nuestra finca. Rico en vitaminas y minerales, hidrata y suaviza la piel. Sin parabenos ni sulfatos.',
+    title: 'Jabón Artesanal de Leche',
+    description: 'Formulado con leche de cabra y aceites naturales de la finca. Nutre, hidrata y cuida la piel sin químicos agresivos. Un lujo sencillo y auténtico.',
     priceLabel: '₡4,500 / unidad',
     priceNum: 4500,
     category: 'artisanal',
@@ -163,7 +163,7 @@ function CartDrawer({ open, items, total, onClose, onAdd, onRemove, onClear }) {
     const lines = items.map(({ product, qty }) =>
       `• ${qty}x ${product.title} — ₡${(product.priceNum * qty).toLocaleString('es-CR')}`
     ).join('\n')
-    const msg = `Hola Marlen! Le hago el siguiente pedido desde la tienda de Finca Flordelima 🌿\n\n📦 *Pedido:*\n${lines}\n\n💰 *Total: ₡${total.toLocaleString('es-CR')}*\n\n¡Muchas gracias!`
+    const msg = `Hola Marlen! Le hago el siguiente pedido desde la tienda de Flor de Lima 🌿\n\n📦 *Pedido:*\n${lines}\n\n💰 *Total: ₡${total.toLocaleString('es-CR')}*\n\n¡Muchas gracias!`
     return `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(msg)}`
   }
 
@@ -290,8 +290,8 @@ export default function MarketPage() {
           <div className="container market-hero__inner">
             <div className="market-hero__copy">
               <span className="section-eyebrow">Tienda en Línea</span>
-              <h1>Productos Frescos<br />de la Finca</h1>
-              <p>Elige tus productos, agrégalos al carrito y haz tu pedido directamente por WhatsApp. Entrega coordinada con Marlen.</p>
+              <h1>Del campo<br />a tu puerta</h1>
+              <p>Elige tus productos, arma tu pedido y coordina la entrega directamente con Marlen por WhatsApp. Rápido, confiable y siempre fresco.</p>
             </div>
             <div className="market-hero__badge">
               <FaLeaf style={{ fontSize: '2.5rem', color: '#c8a96e' }} />
@@ -343,24 +343,24 @@ export default function MarketPage() {
         <section className="market-info-strip">
           <div className="container market-info-strip__inner">
             <div className="market-info-item">
-              <span className="market-info-item__icon">🚜</span>
-              <strong>Producto fresco</strong>
-              <p>Directo de la finca a tu puerta</p>
+              <span className="market-info-item__icon">🌱</span>
+              <strong>Cosechado en la finca</strong>
+              <p>De nuestras manos directamente a las tuyas</p>
             </div>
             <div className="market-info-item">
               <span className="market-info-item__icon">💬</span>
               <strong>Pedido por WhatsApp</strong>
-              <p>Coordina entrega con Marlen</p>
+              <p>Coordina tu entrega directo con Marlen</p>
             </div>
             <div className="market-info-item">
               <span className="market-info-item__icon">🌿</span>
-              <strong>100% Natural</strong>
-              <p>Sin aditivos ni conservantes</p>
+              <strong>Sin Artificios</strong>
+              <p>Ingredientes naturales, procesos honestos</p>
             </div>
             <div className="market-info-item">
               <span className="market-info-item__icon">💳</span>
               <strong>SINPE Móvil</strong>
-              <p>Pago fácil y seguro</p>
+              <p>Pago rápido, fácil y seguro</p>
             </div>
           </div>
         </section>
@@ -386,7 +386,7 @@ export default function MarketPage() {
       />
 
       <Footer
-        brand="Finca Flordelima"
+        brand="Flor de Lima"
         phone="8843-8492"
         whatsapp="https://wa.me/50688438492"
         facebook="https://facebook.com"
