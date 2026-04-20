@@ -6,7 +6,6 @@ import Footer from './components/Footer'
 import { useScrollReveal } from './hooks/useScrollReveal'
 import {
   FaSeedling, FaIndustry, FaShieldAlt,
-  FaUsers, FaMedal, FaTree,
   FaMapMarkerAlt, FaPhone, FaClock,
   FaFacebook, FaWhatsapp,
 } from 'react-icons/fa'
@@ -18,18 +17,6 @@ function StatItem({ number, label, desc }) {
       <div className="stat-label">{label}</div>
       <p>{desc}</p>
     </div>
-  )
-}
-
-function ValueCard({ icon: Icon, title, desc, delay }) {
-  return (
-    <article className={`value-card reveal reveal-delay-${delay}`}>
-      <div className="value-card-icon" aria-hidden="true">
-        <Icon />
-      </div>
-      <h3>{title}</h3>
-      <p>{desc}</p>
-    </article>
   )
 }
 
@@ -85,13 +72,6 @@ function App() {
     stat3Desc: 'Ingredientes puros, procesos transparentes',
     stat4Title: '6 Productos',
     stat4Desc: 'Artesanales, frescos y elaborados a diario',
-    valuesTitle: 'Lo que nos mueve cada día',
-    familyValue: 'Legado Familiar',
-    familyDesc: 'Tres generaciones unidas por el mismo amor al campo. En Flor de Lima, la familia no es solo historia — es el corazón de todo lo que hacemos.',
-    qualityValue: 'Artesanía sin Concesiones',
-    qualityDesc: 'Cada lote es pequeño por decisión, no por limitación. Nos tomamos el tiempo necesario porque creemos que la calidad real no se puede apresurar.',
-    sustainValue: 'Compromiso con la Tierra',
-    sustainDesc: 'Prácticas responsables, respeto por los ecosistemas y un compromiso genuino con dejar la tierra mejor de como la encontramos — generación tras generación.',
     socialTitle: 'La finca, de cerca',
     socialSubtitle: 'Síguenos y sé parte de nuestra comunidad. Compartimos el día a día de la finca, novedades de temporada y el proceso detrás de cada producto.',
     facebook: 'Facebook',
@@ -176,7 +156,6 @@ function App() {
   const productsRef = useScrollReveal({ threshold: 0.05 })
   const storyRef    = useScrollReveal({ threshold: 0.08 })
   const statsRef    = useScrollReveal({ threshold: 0.1 })
-  const valuesRef   = useScrollReveal({ threshold: 0.08 })
   const locationRef = useScrollReveal({ threshold: 0.08 })
   const socialRef   = useScrollReveal({ threshold: 0.1 })
   const ctaRef      = useScrollReveal({ threshold: 0.1 })
@@ -186,7 +165,6 @@ function App() {
       <Navbar brand={text.brand} links={navLinks} />
 
       <main className="site-main">
-
         {/* ── Hero ── */}
         <section className="hero-section">
           <div className="container">
@@ -209,7 +187,6 @@ function App() {
             </div>
           </div>
         </section>
-
         {/* ── Products ── */}
         <section id="products" className="products-section">
           <div className="container">
@@ -226,7 +203,6 @@ function App() {
             </div>
           </div>
         </section>
-
         {/* ── Story ── */}
         <section id="story" className="story-section">
           <div className="container">
@@ -256,7 +232,6 @@ function App() {
             </div>
           </div>
         </section>
-
         {/* ── Stats ── */}
         <section className="stats-section">
           <div className="container">
@@ -269,19 +244,6 @@ function App() {
             </div>
           </div>
         </section>
-
-        {/* ── Values ── */}
-        <section className="values-section">
-          <div className="container">
-            <h2 ref={valuesRef} className="section-title reveal">{text.valuesTitle}</h2>
-            <div className="values-grid">
-              <ValueCard icon={FaUsers} title={text.familyValue} desc={text.familyDesc} delay={1} />
-              <ValueCard icon={FaMedal} title={text.qualityValue} desc={text.qualityDesc} delay={2} />
-              <ValueCard icon={FaTree} title={text.sustainValue} desc={text.sustainDesc} delay={3} />
-            </div>
-          </div>
-        </section>
-
         {/* ── Location ── */}
         <section id="location" className="location-section">
           <div className="container">
@@ -328,7 +290,6 @@ function App() {
             </div>
           </div>
         </section>
-
         {/* ── Social ── */}
         <section ref={socialRef} className="social-section reveal">
           <div className="container social-container">
@@ -358,7 +319,6 @@ function App() {
             </div>
           </div>
         </section>
-
         {/* ── Contact CTA ── */}
         <section id="contact" className="cta-section">
           <div className="container">
