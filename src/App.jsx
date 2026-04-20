@@ -1,3 +1,4 @@
+import { useRef, useEffect } from 'react'
 import './App.css'
 import ProductCard from './components/ProductCard'
 import Navbar from './components/Navbar'
@@ -149,6 +150,27 @@ function App() {
     { href: '#contact',  label: text.navContact },
   ]
 
+  const productGridRef = useRef(null)
+  useEffect(() => {
+    const grid = productGridRef.current
+    if (!grid) return
+    if (!('IntersectionObserver' in window)) {
+      grid.querySelectorAll('.reveal-scale').forEach(el => el.classList.add('is-visible'))
+      return
+    }
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          grid.querySelectorAll('.reveal-scale').forEach(el => el.classList.add('is-visible'))
+          observer.unobserve(grid)
+        }
+      },
+      { threshold: 0.05, rootMargin: '0px 0px -40px 0px' }
+    )
+    observer.observe(grid)
+    return () => observer.disconnect()
+  }, [])
+
   const heroRef     = useScrollReveal({ threshold: 0.05 })
   const productsRef = useScrollReveal({ threshold: 0.05 })
   const storyRef    = useScrollReveal({ threshold: 0.08 })
@@ -194,7 +216,7 @@ function App() {
               <span className="section-eyebrow">{text.freshOfferings}</span>
               <h2>{text.chooseMilk}</h2>
             </div>
-            <div className="product-grid">
+            <div className="product-grid" ref={productGridRef}>
               {products.map((product, i) => (
                 <div key={product.title} className={`reveal-scale reveal-delay-${i + 1}`}>
                   <ProductCard {...product} />
