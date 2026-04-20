@@ -603,7 +603,7 @@ export default function MarketPage() {
               <p>Elige tus productos, arma tu pedido y paga con tarjeta o coordina la entrega directamente con Marlen por WhatsApp.</p>
             </div>
             <div className="market-hero__badge">
-              <FaLeaf style={{ fontSize: '2.5rem', color: '#c8a96e' }} />
+              <img src="/logo.png" alt="Flordelima" className="market-hero__badge-logo" />
               <span>100% Artesanal</span>
             </div>
           </div>
