@@ -10,7 +10,7 @@ export default function Footer({ brand, phone, whatsapp, facebook, instagram, ti
 
         <div className="footer__brand-col">
           <div className="footer__brand">
-            <FaLeaf className="footer__leaf" aria-hidden="true" />
+            <img src="/logo2.png" alt={brand} className="footer__leaf" />
             <span>{brand}</span>
           </div>
           <p className="footer__tagline">

@@ -1166,7 +1166,9 @@
 }
 
 .footer__leaf {
-  color: var(--color-gold);
+  height: 76px;
+  width: auto;
+  display: block;
 }
 
 .footer__tagline {

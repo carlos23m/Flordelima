@@ -664,7 +664,7 @@ export default function MarketPage() {
               <p>Elige tus productos, arma tu pedido y paga con tarjeta o coordina la entrega directamente con el encargado responsable por WhatsApp.</p>
             </div>
             <div className="market-hero__badge">
-              <img src="/logo.png" alt="Flordelima" className="market-hero__badge-logo" />
+              <img src="/logo2.png" alt="Flordelima" className="market-hero__badge-logo" />
               <div className="market-hero__badge-divider" />
               <span className="market-hero__badge-label">100% Artesanal</span>
               <span className="market-hero__badge-sub">Guácimo, Limón · Costa Rica</span>
