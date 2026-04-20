@@ -201,6 +201,68 @@ function ClientInfoForm({ open, initialData, onSubmit, onClose }) {
   )
 }
 
+// ── Transaction summary modal ────────────────────────────────────────────────
+
+function TransactionSummary({ open, status, client, items, total, onClose }) {
+  if (!open) return null
+  const succeeded = status === 'succeeded'
+  return (
+    <div className="onvo-modal-overlay">
+      <div className={`onvo-modal tx-summary${succeeded ? ' onvo-modal--success' : ' onvo-modal--error'}`}>
+        <div className="tx-summary__header">
+          {succeeded
+            ? <FaCheckCircle style={{ fontSize: '2.2rem', color: '#40916c' }} />
+            : <FaTimes style={{ fontSize: '2rem', color: '#c0392b' }} />
+          }
+          <h3>{succeeded ? '¡Pago exitoso!' : status === 'declined' ? 'Pago rechazado' : 'Error de pago'}</h3>
+          <p className="tx-summary__subtitle">
+            {succeeded ? 'Tu pedido ha sido confirmado.' : 'Tu carrito sigue guardado para que puedas intentarlo de nuevo.'}
+          </p>
+        </div>
+
+        {client && (
+          <div className="tx-summary__section">
+            <p className="tx-summary__section-label">Datos del cliente</p>
+            <div className="tx-summary__grid">
+              <span className="tx-summary__key">Nombre</span><span>{client.nombre}</span>
+              <span className="tx-summary__key">Email</span><span>{client.email}</span>
+              <span className="tx-summary__key">Teléfono</span><span>{client.telefono}</span>
+              {client.cedula    && <><span className="tx-summary__key">Cédula</span><span>{client.cedula}</span></>}
+              {client.provincia && <><span className="tx-summary__key">Provincia</span><span>{client.provincia}</span></>}
+              {client.canton    && <><span className="tx-summary__key">Cantón</span><span>{client.canton}</span></>}
+              {client.direccion && <><span className="tx-summary__key">Dirección</span><span>{client.direccion}</span></>}
+              {client.notas     && <><span className="tx-summary__key">Notas</span><span>{client.notas}</span></>}
+            </div>
+          </div>
+        )}
+
+        {items?.length > 0 && (
+          <div className="tx-summary__section">
+            <p className="tx-summary__section-label">Productos</p>
+            <ul className="tx-summary__items">
+              {items.map((item, i) => (
+                <li key={i} className="tx-summary__item">
+                  <span className="tx-summary__item-name">{item.title}</span>
+                  <span className="tx-summary__item-qty">×{item.qty}</span>
+                  <span className="tx-summary__item-price">
+                    {(item.priceNum * item.qty).toLocaleString('es-CR', { style: 'currency', currency: 'CRC', maximumFractionDigits: 0 })}
+                  </span>
+                </li>
+              ))}
+            </ul>
+            <div className="tx-summary__total">
+              <span>Total</span>
+              <span>{total.toLocaleString('es-CR', { style: 'currency', currency: 'CRC', maximumFractionDigits: 0 })}</span>
+            </div>
+          </div>
+        )}
+
+        <button className="cart-onvo-btn" onClick={onClose}>Cerrar</button>
+      </div>
+    </div>
+  )
+}
+
 // ── Market product card ──────────────────────────────────────────────────────
 
 function MarketCard({ product, qty, onAdd, onRemove }) {
@@ -396,6 +458,7 @@ export default function MarketPage() {
   const [activeCategory, setActiveCategory] = useState('all')
   const [cartOpen, setCartOpen] = useState(false)
   const [clientFormOpen, setClientFormOpen] = useState(false)
+  const [summaryOpen, setSummaryOpen] = useState(false)
   const [clientInfo, setClientInfo] = useState(null)
   const [pendingCartItems, setPendingCartItems] = useState([])
   const [pendingTotal, setPendingTotal] = useState(0)
@@ -403,7 +466,6 @@ export default function MarketPage() {
   const [paymentIntentId, setPaymentIntentId] = useState(null)
   const [onvoOpen, setOnvoOpen] = useState(false)
   const [onvoStatus, setOnvoStatus] = useState('idle') // idle | loading | success | declined | error
-  const [onvoErrorMsg, setOnvoErrorMsg] = useState('')
 
   const addToCart = (product) =>
     setCart(prev => ({
@@ -436,7 +498,6 @@ export default function MarketPage() {
     setClientInfo(formData)
     setClientFormOpen(false)
     setOnvoStatus('loading')
-    setOnvoErrorMsg('')
     try {
       await loadOnvoScript()
       const res = await fetch('/api/create-payment-intent', {
@@ -450,10 +511,9 @@ export default function MarketPage() {
       setPaymentIntentId(data.id)
       setOnvoOpen(true)
       setOnvoStatus('idle')
-    } catch (err) {
-      setOnvoErrorMsg(err.message || 'Error al procesar el pago')
+    } catch {
       setOnvoStatus('error')
-      setOnvoOpen(true)
+      setSummaryOpen(true)
     }
   }
 
@@ -488,23 +548,25 @@ export default function MarketPage() {
       setCart({})
     } else {
       setOnvoStatus('declined')
-      setOnvoErrorMsg('Tu tarjeta fue rechazada. Por favor intenta con otra tarjeta.')
       persistTransaction('declined', result)
     }
+    setOnvoOpen(false)
+    setSummaryOpen(true)
   }
 
   const handleOnvoError = (err) => {
     setOnvoStatus('error')
-    setOnvoErrorMsg(err?.message || 'Error al procesar el pago')
     persistTransaction('failed', err)
+    setOnvoOpen(false)
+    setSummaryOpen(true)
   }
 
   const resetOnvo = () => {
     setOnvoOpen(false)
+    setSummaryOpen(false)
     setPaymentIntentId(null)
     setPendingPaymentIntentId(null)
     setOnvoStatus('idle')
-    setOnvoErrorMsg('')
   }
 
   const cartItems = Object.values(cart)
@@ -636,34 +698,23 @@ export default function MarketPage() {
         onvoLoading={onvoStatus === 'loading'}
       />
 
-      {onvoOpen && (
-        onvoStatus === 'success' ? (
-          <div className="onvo-modal-overlay">
-            <div className="onvo-modal onvo-modal--success">
-              <FaCheckCircle style={{ fontSize: '3rem', color: '#40916c', marginBottom: 16 }} />
-              <h3>¡Pago exitoso!</h3>
-              <p>Tu pedido ha sido confirmado.</p>
-              <button className="cart-onvo-btn" onClick={() => { resetOnvo(); clearCart() }}>Cerrar</button>
-            </div>
-          </div>
-        ) : onvoStatus === 'declined' || onvoStatus === 'error' ? (
-          <div className="onvo-modal-overlay">
-            <div className="onvo-modal onvo-modal--error">
-              <FaTimes style={{ fontSize: '2.5rem', color: '#c0392b', marginBottom: 16 }} />
-              <h3>{onvoStatus === 'declined' ? 'Pago rechazado' : 'Error de pago'}</h3>
-              <p>{onvoErrorMsg}</p>
-              <button className="cart-onvo-btn" onClick={resetOnvo}>Cerrar</button>
-            </div>
-          </div>
-        ) : paymentIntentId ? (
-          <OnvoPayModal
-            paymentIntentId={paymentIntentId}
-            onClose={resetOnvo}
-            onResult={handleOnvoResult}
-            onError={handleOnvoError}
-          />
-        ) : null
+      {onvoOpen && paymentIntentId && (
+        <OnvoPayModal
+          paymentIntentId={paymentIntentId}
+          onClose={resetOnvo}
+          onResult={handleOnvoResult}
+          onError={handleOnvoError}
+        />
       )}
+
+      <TransactionSummary
+        open={summaryOpen}
+        status={onvoStatus}
+        client={clientInfo}
+        items={pendingCartItems}
+        total={pendingTotal}
+        onClose={resetOnvo}
+      />
 
       <Footer
         brand="Flor de Lima"
