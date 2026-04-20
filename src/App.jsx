@@ -7,8 +7,9 @@ import { useScrollReveal } from './hooks/useScrollReveal'
 import {
   FaSeedling, FaIndustry, FaShieldAlt,
   FaMapMarkerAlt, FaPhone, FaClock,
-  FaFacebook, FaWhatsapp,
+  FaFacebook, FaWhatsapp, FaInstagram,
 } from 'react-icons/fa'
+import { SiTiktok } from 'react-icons/si'
 
 function StatItem({ number, label, desc }) {
   return (
@@ -76,6 +77,8 @@ function App() {
     socialSubtitle: 'Síguenos y sé parte de nuestra comunidad. Compartimos el día a día de la finca, novedades de temporada y el proceso detrás de cada producto.',
     facebook: 'Facebook',
     whatsapp: 'WhatsApp',
+    instagram: 'Instagram',
+    tiktok: 'TikTok',
   }
 
   const products = [
@@ -336,6 +339,26 @@ function App() {
               >
                 <FaWhatsapp className="social-icon" aria-hidden="true" />
                 <span className="social-label">{text.whatsapp}</span>
+              </a>
+              <a
+                href="https://instagram.com"
+                className="social-link social-link--ig"
+                target="_blank"
+                rel="noopener noreferrer"
+                title={text.instagram}
+              >
+                <FaInstagram className="social-icon" aria-hidden="true" />
+                <span className="social-label">{text.instagram}</span>
+              </a>
+              <a
+                href="https://tiktok.com"
+                className="social-link social-link--tt"
+                target="_blank"
+                rel="noopener noreferrer"
+                title={text.tiktok}
+              >
+                <SiTiktok className="social-icon" aria-hidden="true" />
+                <span className="social-label">{text.tiktok}</span>
               </a>
             </div>
           </div>

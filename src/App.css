@@ -944,6 +944,20 @@
   color: #25D366;
 }
 
+.social-link--ig { color: var(--color-text); }
+.social-link--ig .social-icon { color: #e1306c; }
+.social-link--ig:hover {
+  border-color: #e1306c;
+  color: #e1306c;
+}
+
+.social-link--tt { color: var(--color-text); }
+.social-link--tt .social-icon { color: #010101; }
+.social-link--tt:hover {
+  border-color: #010101;
+  color: #010101;
+}
+
 .social-label {
   font-family: var(--font-body);
 }
