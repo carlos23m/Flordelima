@@ -9,6 +9,7 @@ import Footer from '../components/Footer'
 
 const WHATSAPP_NUMBER = '50688438492'
 const ONVO_PUBLIC_KEY = import.meta.env.VITE_ONVO_PUBLIC_KEY
+const PROVINCIAS_CR = ['San José','Alajuela','Cartago','Heredia','Guanacaste','Puntarenas','Limón']
 
 function loadOnvoScript() {
   return new Promise((resolve, reject) => {
@@ -88,6 +89,117 @@ const CATEGORIES = [
   { id: 'artisanal', label: 'Artesanales' },
 ]
 
+
+// ── Client info form ─────────────────────────────────────────────────────────
+
+function ClientInfoForm({ open, initialData, onSubmit, onClose }) {
+  const [form, setForm] = useState({
+    nombre: '', email: '', telefono: '', cedula: '',
+    provincia: '', canton: '', direccion: '', notas: '',
+    ...initialData,
+  })
+  const [errors, setErrors] = useState({})
+
+  const set = (field) => (e) => setForm(prev => ({ ...prev, [field]: e.target.value }))
+
+  const validate = () => {
+    const errs = {}
+    if (!form.nombre.trim())   errs.nombre   = 'El nombre es obligatorio'
+    if (!form.email.trim())    errs.email    = 'El correo es obligatorio'
+    else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(form.email)) errs.email = 'Correo inválido'
+    if (!form.telefono.trim()) errs.telefono = 'El teléfono es obligatorio'
+    return errs
+  }
+
+  const handleSubmit = (e) => {
+    e.preventDefault()
+    const errs = validate()
+    if (Object.keys(errs).length > 0) { setErrors(errs); return }
+    onSubmit(form)
+  }
+
+  if (!open) return null
+
+  return (
+    <div className="client-form-overlay" onClick={onClose}>
+      <div className="client-form-modal" onClick={e => e.stopPropagation()} role="dialog" aria-modal="true" aria-labelledby="client-form-title">
+        <div className="onvo-modal__header">
+          <h2 id="client-form-title">
+            <FaCreditCard style={{ marginRight: 10, color: '#40916c' }} />
+            Datos de contacto
+          </h2>
+          <button className="cart-drawer__close" onClick={onClose} aria-label="Cerrar"><FaTimes /></button>
+        </div>
+        <form className="client-form__body" onSubmit={handleSubmit} noValidate>
+          <div className="client-form__section-label">Información requerida</div>
+
+          <div className="client-form__field">
+            <label htmlFor="cf-nombre">Nombre completo *</label>
+            <input id="cf-nombre" type="text" value={form.nombre} onChange={set('nombre')}
+              autoComplete="name" placeholder="Ej: María Rodríguez"
+              className={errors.nombre ? 'client-form__input--error' : ''} />
+            {errors.nombre && <span className="client-form__error">{errors.nombre}</span>}
+          </div>
+
+          <div className="client-form__field">
+            <label htmlFor="cf-email">Correo electrónico *</label>
+            <input id="cf-email" type="email" value={form.email} onChange={set('email')}
+              autoComplete="email" placeholder="Ej: maria@email.com"
+              className={errors.email ? 'client-form__input--error' : ''} />
+            {errors.email && <span className="client-form__error">{errors.email}</span>}
+          </div>
+
+          <div className="client-form__field">
+            <label htmlFor="cf-telefono">Teléfono *</label>
+            <input id="cf-telefono" type="tel" value={form.telefono} onChange={set('telefono')}
+              autoComplete="tel" placeholder="Ej: 8888-8888"
+              className={errors.telefono ? 'client-form__input--error' : ''} />
+            {errors.telefono && <span className="client-form__error">{errors.telefono}</span>}
+          </div>
+
+          <div className="client-form__field">
+            <label htmlFor="cf-cedula">Cédula <span className="client-form__optional">(opcional)</span></label>
+            <input id="cf-cedula" type="text" value={form.cedula} onChange={set('cedula')} placeholder="Ej: 1-1234-5678" />
+          </div>
+
+          <div className="client-form__section-label" style={{ marginTop: 6 }}>
+            Dirección de entrega <span className="client-form__optional">(opcional)</span>
+          </div>
+
+          <div className="client-form__row">
+            <div className="client-form__field">
+              <label htmlFor="cf-provincia">Provincia</label>
+              <select id="cf-provincia" value={form.provincia} onChange={set('provincia')}>
+                <option value="">Seleccionar...</option>
+                {PROVINCIAS_CR.map(p => <option key={p} value={p}>{p}</option>)}
+              </select>
+            </div>
+            <div className="client-form__field">
+              <label htmlFor="cf-canton">Cantón</label>
+              <input id="cf-canton" type="text" value={form.canton} onChange={set('canton')} placeholder="Ej: Guácimo" />
+            </div>
+          </div>
+
+          <div className="client-form__field">
+            <label htmlFor="cf-direccion">Dirección</label>
+            <input id="cf-direccion" type="text" value={form.direccion} onChange={set('direccion')} placeholder="Ej: 200m norte del parque central" />
+          </div>
+
+          <div className="client-form__field">
+            <label htmlFor="cf-notas">Notas / instrucciones</label>
+            <textarea id="cf-notas" value={form.notas} onChange={set('notas')} rows={3}
+              placeholder="Ej: Llamar antes de llegar, entregar en portón azul..." />
+          </div>
+
+          <button type="submit" className="cart-onvo-btn" style={{ marginTop: 4 }}>
+            <FaCreditCard style={{ fontSize: '1.1rem' }} />
+            Continuar al pago
+          </button>
+        </form>
+      </div>
+    </div>
+  )
+}
 
 // ── Market product card ──────────────────────────────────────────────────────
 
@@ -283,6 +395,11 @@ export default function MarketPage() {
   const [cart, setCart] = useState({})
   const [activeCategory, setActiveCategory] = useState('all')
   const [cartOpen, setCartOpen] = useState(false)
+  const [clientFormOpen, setClientFormOpen] = useState(false)
+  const [clientInfo, setClientInfo] = useState(null)
+  const [pendingCartItems, setPendingCartItems] = useState([])
+  const [pendingTotal, setPendingTotal] = useState(0)
+  const [pendingPaymentIntentId, setPendingPaymentIntentId] = useState(null)
   const [paymentIntentId, setPaymentIntentId] = useState(null)
   const [onvoOpen, setOnvoOpen] = useState(false)
   const [onvoStatus, setOnvoStatus] = useState('idle') // idle | loading | success | declined | error
@@ -308,7 +425,16 @@ export default function MarketPage() {
 
   const clearCart = () => setCart({})
 
-  const handleOnvoPay = async () => {
+  const handleOnvoPay = () => {
+    setPendingCartItems(cartItems)
+    setPendingTotal(cartTotal)
+    setCartOpen(false)
+    setClientFormOpen(true)
+  }
+
+  const handleClientFormSubmit = async (formData) => {
+    setClientInfo(formData)
+    setClientFormOpen(false)
     setOnvoStatus('loading')
     setOnvoErrorMsg('')
     try {
@@ -320,33 +446,62 @@ export default function MarketPage() {
       })
       const data = await res.json()
       if (!res.ok) throw new Error(data.error || 'Error al crear el pago')
+      setPendingPaymentIntentId(data.id)
       setPaymentIntentId(data.id)
       setOnvoOpen(true)
       setOnvoStatus('idle')
-      setCartOpen(false)
     } catch (err) {
       setOnvoErrorMsg(err.message || 'Error al procesar el pago')
       setOnvoStatus('error')
+      setOnvoOpen(true)
+    }
+  }
+
+  const persistTransaction = async (status, onvoResult) => {
+    if (!clientInfo || !pendingPaymentIntentId) return
+    try {
+      await fetch('/api/save-transaction', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          client: clientInfo,
+          paymentIntentId: pendingPaymentIntentId,
+          amount: pendingTotal,
+          status,
+          onvoResult: onvoResult ?? null,
+          items: pendingCartItems.map(({ product, qty }) => ({
+            id: product.id, title: product.title,
+            priceNum: product.priceNum, priceLabel: product.priceLabel,
+            category: product.category, qty,
+          })),
+        }),
+      })
+    } catch (err) {
+      console.error('Failed to persist transaction:', err)
     }
   }
 
   const handleOnvoResult = (result) => {
     if (result?.status === 'succeeded') {
       setOnvoStatus('success')
+      persistTransaction('succeeded', result)
     } else {
       setOnvoStatus('declined')
       setOnvoErrorMsg('Tu tarjeta fue rechazada. Por favor intenta con otra tarjeta.')
+      persistTransaction('declined', result)
     }
   }
 
   const handleOnvoError = (err) => {
     setOnvoStatus('error')
     setOnvoErrorMsg(err?.message || 'Error al procesar el pago')
+    persistTransaction('failed', err)
   }
 
   const resetOnvo = () => {
     setOnvoOpen(false)
     setPaymentIntentId(null)
+    setPendingPaymentIntentId(null)
     setOnvoStatus('idle')
     setOnvoErrorMsg('')
   }
@@ -460,6 +615,13 @@ export default function MarketPage() {
           <span className="cart-fab__badge">{cartCount}</span>
         </button>
       )}
+
+      <ClientInfoForm
+        open={clientFormOpen}
+        initialData={clientInfo}
+        onSubmit={handleClientFormSubmit}
+        onClose={() => setClientFormOpen(false)}
+      />
 
       <CartDrawer
         open={cartOpen}
