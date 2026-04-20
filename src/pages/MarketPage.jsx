@@ -296,11 +296,9 @@ function TransactionSummary({ open, status, client, items, total, paymentIntentI
 
 function MarketCard({ product, qty, onAdd, onRemove }) {
   const [justAdded, setJustAdded] = useState(false)
-  const accentColor = product.category === 'citrus' ? '#c8a96e' : '#40916c'
-  const accentDark  = product.category === 'citrus' ? '#a0854e' : '#2d6a4f'
-  const bgGradient  = product.category === 'citrus'
-    ? 'linear-gradient(135deg, #fdf6e8 0%, #faf9f6 100%)'
-    : 'linear-gradient(135deg, #f0faf3 0%, #faf9f6 100%)'
+  const accentColor = '#40916c'
+  const accentDark  = '#2d6a4f'
+  const bgGradient  = 'linear-gradient(135deg, #f0faf3 0%, #faf9f6 100%)'
 
   const handleAdd = () => {
     onAdd()
