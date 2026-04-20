@@ -73,7 +73,7 @@ const PRODUCTS = [
   },
   {
     id: 6,
-    title: 'Jabón Artesanal de Leche',
+    title: 'Jabón Artesanal',
     description: 'Formulado con leche de cabra y aceites naturales de la finca. Nutre, hidrata y cuida la piel sin químicos agresivos. Un lujo sencillo y auténtico.',
     priceLabel: '₡4,500 / unidad',
     priceNum: 4500,
