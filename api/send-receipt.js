@@ -7,89 +7,165 @@ function formatCRC(amount) {
 }
 
 function buildEmailHtml({ client, items, total, paymentIntentId }) {
-  const itemRows = items.map(item => `
-    <tr>
-      <td style="padding:10px 0;border-bottom:1px solid #e8e4dc;color:#2d3a2e;font-family:Georgia,serif;">${item.title}</td>
-      <td style="padding:10px 0;border-bottom:1px solid #e8e4dc;text-align:center;color:#5a6353;">×${item.qty}</td>
-      <td style="padding:10px 0;border-bottom:1px solid #e8e4dc;text-align:right;color:#2d3a2e;font-weight:600;">${formatCRC(item.priceNum * item.qty)}</td>
+  const itemRows = items.map((item, i) => `
+    <tr style="background:${i % 2 === 0 ? '#ffffff' : '#fafaf8'};">
+      <td style="padding:13px 16px;color:#1a2e1a;font-size:0.92rem;">${item.title}</td>
+      <td style="padding:13px 16px;text-align:center;color:#6b7c6b;font-size:0.88rem;">×${item.qty}</td>
+      <td style="padding:13px 16px;text-align:right;color:#1a2e1a;font-weight:600;font-size:0.92rem;white-space:nowrap;">${formatCRC(item.priceNum * item.qty)}</td>
     </tr>
   `).join('')
 
   const addressParts = [client.direccion, client.canton, client.provincia].filter(Boolean)
-  const addressLine = addressParts.length > 0
-    ? `<tr><td style="color:#888;padding:2px 0;">Dirección</td><td style="color:#2d3a2e;padding:2px 0;">${addressParts.join(', ')}</td></tr>`
-    : ''
+
+  const clientFields = [
+    ['Nombre',   client.nombre],
+    ['Correo',   client.email],
+    ['Teléfono', client.telefono],
+    client.cedula    ? ['Cédula',    client.cedula]    : null,
+    addressParts.length ? ['Dirección', addressParts.join(', ')] : null,
+    client.notas     ? ['Notas',     client.notas]     : null,
+  ].filter(Boolean)
+
+  const clientRows = clientFields.map(([label, value]) => `
+    <tr>
+      <td style="padding:7px 0;color:#8a9e8a;font-size:0.82rem;width:90px;vertical-align:top;">${label}</td>
+      <td style="padding:7px 0;color:#1a2e1a;font-size:0.88rem;">${value}</td>
+    </tr>
+  `).join('')
+
+  const now = new Date().toLocaleDateString('es-CR', { year: 'numeric', month: 'long', day: 'numeric' })
 
   return `<!DOCTYPE html>
 <html lang="es">
-<head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"></head>
-<body style="margin:0;padding:0;background:#f5f3ef;font-family:'Helvetica Neue',Arial,sans-serif;">
-  <table width="100%" cellpadding="0" cellspacing="0" style="background:#f5f3ef;padding:32px 16px;">
-    <tr><td align="center">
-      <table width="100%" style="max-width:560px;background:#ffffff;border-radius:12px;overflow:hidden;box-shadow:0 4px 24px rgba(45,106,79,0.10);">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Recibo – Finca Flordelima</title>
+</head>
+<body style="margin:0;padding:0;background:#edecea;font-family:'Helvetica Neue',Arial,sans-serif;">
 
-        <!-- Header -->
-        <tr>
-          <td style="background:linear-gradient(135deg,#2d6a4f,#40916c);padding:32px 36px;text-align:center;">
-            <p style="margin:0 0 4px;color:#d4edda;font-size:0.75rem;letter-spacing:0.12em;text-transform:uppercase;">Recibo de compra</p>
-            <h1 style="margin:0;color:#ffffff;font-family:Georgia,serif;font-size:1.6rem;font-weight:700;">Finca Flordelima</h1>
-            <p style="margin:6px 0 0;color:#b7dfc8;font-size:0.8rem;">Productos Artesanales · Guácimo, Limón</p>
-            <p style="margin:14px 0 0;display:inline-block;background:rgba(0,0,0,0.2);color:#e8f5e9;font-family:monospace;font-size:0.8rem;padding:4px 14px;border-radius:20px;letter-spacing:0.05em;">ID: ${paymentIntentId}</p>
-          </td>
-        </tr>
+  <table width="100%" cellpadding="0" cellspacing="0" style="background:#edecea;padding:40px 16px 48px;">
+  <tr><td align="center">
 
-        <!-- Success badge -->
-        <tr>
-          <td style="padding:24px 36px 0;text-align:center;">
-            <span style="display:inline-block;background:#d4edda;color:#2d6a4f;padding:6px 18px;border-radius:20px;font-size:0.85rem;font-weight:600;">✓ Pago confirmado</span>
-          </td>
-        </tr>
+    <table width="100%" style="max-width:580px;" cellpadding="0" cellspacing="0">
 
-        <!-- Client info -->
-        <tr>
-          <td style="padding:24px 36px 0;">
-            <p style="margin:0 0 10px;font-size:0.7rem;font-weight:700;color:#888;text-transform:uppercase;letter-spacing:0.1em;">Datos del cliente</p>
-            <table width="100%" cellpadding="0" cellspacing="4">
-              <tr><td style="color:#888;padding:2px 0;width:90px;">Nombre</td><td style="color:#2d3a2e;padding:2px 0;">${client.nombre}</td></tr>
-              <tr><td style="color:#888;padding:2px 0;">Email</td><td style="color:#2d3a2e;padding:2px 0;">${client.email}</td></tr>
-              <tr><td style="color:#888;padding:2px 0;">Teléfono</td><td style="color:#2d3a2e;padding:2px 0;">${client.telefono}</td></tr>
-              ${client.cedula ? `<tr><td style="color:#888;padding:2px 0;">Cédula</td><td style="color:#2d3a2e;padding:2px 0;">${client.cedula}</td></tr>` : ''}
-              ${addressLine}
-              ${client.notas ? `<tr><td style="color:#888;padding:2px 0;">Notas</td><td style="color:#2d3a2e;padding:2px 0;">${client.notas}</td></tr>` : ''}
-            </table>
-          </td>
-        </tr>
+      <!-- ─── TOP LABEL ─── -->
+      <tr>
+        <td style="text-align:center;padding-bottom:20px;">
+          <span style="font-size:0.7rem;letter-spacing:0.18em;text-transform:uppercase;color:#7a8c7a;font-weight:600;">Recibo de compra · ${now}</span>
+        </td>
+      </tr>
 
-        <!-- Products -->
-        <tr>
-          <td style="padding:24px 36px 0;">
-            <p style="margin:0 0 10px;font-size:0.7rem;font-weight:700;color:#888;text-transform:uppercase;letter-spacing:0.1em;">Productos</p>
-            <table width="100%" cellpadding="0" cellspacing="0">
-              <tr>
-                <th style="text-align:left;padding-bottom:6px;font-size:0.75rem;color:#888;font-weight:600;border-bottom:2px solid #e8e4dc;">Producto</th>
-                <th style="text-align:center;padding-bottom:6px;font-size:0.75rem;color:#888;font-weight:600;border-bottom:2px solid #e8e4dc;">Cant.</th>
-                <th style="text-align:right;padding-bottom:6px;font-size:0.75rem;color:#888;font-weight:600;border-bottom:2px solid #e8e4dc;">Subtotal</th>
-              </tr>
-              ${itemRows}
-              <tr>
-                <td colspan="2" style="padding:12px 0 0;font-weight:700;color:#2d3a2e;font-size:1rem;">Total</td>
-                <td style="padding:12px 0 0;text-align:right;font-weight:700;color:#2d6a4f;font-size:1.1rem;font-family:Georgia,serif;">${formatCRC(total)}</td>
-              </tr>
-            </table>
-          </td>
-        </tr>
+      <!-- ─── CARD ─── -->
+      <tr>
+        <td style="background:#ffffff;border-radius:16px;overflow:hidden;box-shadow:0 8px 40px rgba(30,60,30,0.12);">
+        <table width="100%" cellpadding="0" cellspacing="0">
 
-        <!-- Footer -->
-        <tr>
-          <td style="padding:28px 36px;text-align:center;border-top:1px solid #e8e4dc;margin-top:24px;">
-            <p style="margin:0;font-size:0.8rem;color:#888;">Gracias por tu compra, <strong style="color:#2d3a2e;">${client.nombre.split(' ')[0]}</strong>.</p>
-            <p style="margin:6px 0 0;font-size:0.75rem;color:#aaa;">¿Tienes alguna duda? Escríbenos a <a href="https://wa.me/50688438492" style="color:#40916c;text-decoration:none;">WhatsApp</a></p>
-          </td>
-        </tr>
+          <!-- Header band -->
+          <tr>
+            <td style="background:#1a3a28;padding:36px 40px 32px;text-align:center;">
+              <p style="margin:0 0 10px;font-size:0.68rem;letter-spacing:0.2em;text-transform:uppercase;color:#7db896;">Finca Flordelima</p>
+              <p style="margin:0 0 6px;font-size:2rem;font-family:Georgia,'Times New Roman',serif;font-weight:700;color:#ffffff;line-height:1.1;">Confirmación<br>de pedido</p>
+              <p style="margin:0;font-size:0.78rem;color:#7db896;letter-spacing:0.06em;">Productos Artesanales · Guácimo, Limón · Costa Rica</p>
+            </td>
+          </tr>
 
-      </table>
-    </td></tr>
+          <!-- Green accent bar -->
+          <tr>
+            <td style="background:linear-gradient(90deg,#2d6a4f,#52b788,#c8a96e);height:4px;font-size:0;line-height:0;">&nbsp;</td>
+          </tr>
+
+          <!-- Success pill -->
+          <tr>
+            <td style="padding:28px 40px 0;text-align:center;">
+              <span style="display:inline-block;background:#e8f5ee;border:1px solid #a8d5b5;color:#1a6640;padding:8px 24px;border-radius:30px;font-size:0.82rem;font-weight:700;letter-spacing:0.04em;">✓&nbsp;&nbsp;Pago exitoso</span>
+            </td>
+          </tr>
+
+          <!-- Greeting -->
+          <tr>
+            <td style="padding:22px 40px 0;text-align:center;">
+              <p style="margin:0;font-size:1.05rem;color:#2a3d2a;font-family:Georgia,serif;">Gracias por tu compra, <strong>${client.nombre.split(' ')[0]}</strong>.</p>
+              <p style="margin:6px 0 0;font-size:0.82rem;color:#8a9e8a;">Aquí tienes el resumen de tu pedido para tus registros.</p>
+            </td>
+          </tr>
+
+          <!-- Divider -->
+          <tr><td style="padding:24px 40px 0;"><div style="height:1px;background:#ede9e3;"></div></td></tr>
+
+          <!-- Client info -->
+          <tr>
+            <td style="padding:22px 40px 0;">
+              <p style="margin:0 0 12px;font-size:0.68rem;font-weight:700;color:#8a9e8a;text-transform:uppercase;letter-spacing:0.14em;">Datos del cliente</p>
+              <table width="100%" cellpadding="0" cellspacing="0">
+                ${clientRows}
+              </table>
+            </td>
+          </tr>
+
+          <!-- Divider -->
+          <tr><td style="padding:22px 40px 0;"><div style="height:1px;background:#ede9e3;"></div></td></tr>
+
+          <!-- Products -->
+          <tr>
+            <td style="padding:22px 40px 0;">
+              <p style="margin:0 0 12px;font-size:0.68rem;font-weight:700;color:#8a9e8a;text-transform:uppercase;letter-spacing:0.14em;">Productos</p>
+            </td>
+          </tr>
+          <tr>
+            <td style="padding:0 40px;">
+              <table width="100%" cellpadding="0" cellspacing="0" style="border-radius:8px;overflow:hidden;border:1px solid #e8e4dc;">
+                <tr style="background:#f5f2ee;">
+                  <th style="padding:9px 16px;text-align:left;font-size:0.7rem;color:#8a9e8a;font-weight:700;text-transform:uppercase;letter-spacing:0.1em;border-bottom:1px solid #e8e4dc;">Producto</th>
+                  <th style="padding:9px 16px;text-align:center;font-size:0.7rem;color:#8a9e8a;font-weight:700;text-transform:uppercase;letter-spacing:0.1em;border-bottom:1px solid #e8e4dc;">Cant.</th>
+                  <th style="padding:9px 16px;text-align:right;font-size:0.7rem;color:#8a9e8a;font-weight:700;text-transform:uppercase;letter-spacing:0.1em;border-bottom:1px solid #e8e4dc;">Subtotal</th>
+                </tr>
+                ${itemRows}
+              </table>
+            </td>
+          </tr>
+
+          <!-- Total -->
+          <tr>
+            <td style="padding:0 40px 0;">
+              <table width="100%" cellpadding="0" cellspacing="0" style="background:#1a3a28;border-radius:0 0 8px 8px;">
+                <tr>
+                  <td style="padding:14px 16px;color:#7db896;font-size:0.82rem;font-weight:700;text-transform:uppercase;letter-spacing:0.1em;">Total pagado</td>
+                  <td style="padding:14px 16px;text-align:right;color:#ffffff;font-size:1.15rem;font-family:Georgia,serif;font-weight:700;">${formatCRC(total)}</td>
+                </tr>
+              </table>
+            </td>
+          </tr>
+
+          <!-- Transaction ID -->
+          <tr>
+            <td style="padding:24px 40px 0;">
+              <div style="background:#f8f6f2;border:1px solid #e0dbd2;border-radius:8px;padding:14px 18px;">
+                <p style="margin:0 0 5px;font-size:0.65rem;font-weight:700;color:#8a9e8a;text-transform:uppercase;letter-spacing:0.14em;">ID de transacción</p>
+                <p style="margin:0;font-family:'Courier New',Courier,monospace;font-size:0.85rem;color:#2a3d2a;word-break:break-all;letter-spacing:0.02em;">${paymentIntentId}</p>
+              </div>
+            </td>
+          </tr>
+
+          <!-- Footer -->
+          <tr>
+            <td style="padding:28px 40px 36px;text-align:center;">
+              <div style="height:1px;background:#ede9e3;margin-bottom:24px;"></div>
+              <p style="margin:0 0 6px;font-size:0.8rem;color:#8a9e8a;">¿Tienes alguna duda con tu pedido?</p>
+              <a href="https://wa.me/50688438492" style="display:inline-block;background:#25d366;color:#ffffff;text-decoration:none;padding:10px 24px;border-radius:24px;font-size:0.82rem;font-weight:700;letter-spacing:0.04em;">Contáctanos por WhatsApp</a>
+              <p style="margin:20px 0 0;font-size:0.72rem;color:#b0bdb0;">© Finca Flordelima · Guácimo, Limón, Costa Rica</p>
+            </td>
+          </tr>
+
+        </table>
+        </td>
+      </tr>
+
+    </table>
+
+  </td></tr>
   </table>
+
 </body>
 </html>`
 }
