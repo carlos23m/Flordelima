@@ -344,10 +344,11 @@ function MarketCard({ product, qty, onAdd, onRemove }) {
 // ── Onvo Pay modal ───────────────────────────────────────────────────────────
 
 function OnvoPayModal({ paymentIntentId, onClose, onResult, onError }) {
-  const containerRef = useRef(null)
-  const onCloseRef  = useRef(onClose)
-  const onResultRef = useRef(onResult)
-  const onErrorRef  = useRef(onError)
+  const containerRef      = useRef(null)
+  const onCloseRef        = useRef(onClose)
+  const onResultRef       = useRef(onResult)
+  const onErrorRef        = useRef(onError)
+  const resultReceivedRef = useRef(false)
 
   useEffect(() => { onCloseRef.current  = onClose  }, [onClose])
   useEffect(() => { onResultRef.current = onResult }, [onResult])
@@ -355,13 +356,22 @@ function OnvoPayModal({ paymentIntentId, onClose, onResult, onError }) {
 
   useEffect(() => {
     if (!paymentIntentId || !containerRef.current) return
+    resultReceivedRef.current = false
     const instance = window.onvo.pay({
       paymentIntentId,
       publicKey: ONVO_PUBLIC_KEY,
       paymentType: 'one_time',
-      onSuccess: (r)   => onResultRef.current(r),
-      onError:   (err) => onErrorRef.current(err),
-      onClose:   ()    => onCloseRef.current(),
+      onSuccess: (r) => {
+        resultReceivedRef.current = true
+        onResultRef.current(r)
+      },
+      onError: (err) => {
+        resultReceivedRef.current = true
+        onErrorRef.current(err)
+      },
+      onClose: () => {
+        if (!resultReceivedRef.current) onCloseRef.current()
+      },
     })
     instance.render(containerRef.current)
       .catch(e => console.error('Onvo render error:', e))
@@ -710,7 +720,7 @@ export default function MarketPage() {
       {onvoOpen && paymentIntentId && (
         <OnvoPayModal
           paymentIntentId={paymentIntentId}
-          onClose={() => { if (onvoStatus === 'idle' || onvoStatus === 'loading') resetOnvo() }}
+          onClose={resetOnvo}
           onResult={handleOnvoResult}
           onError={handleOnvoError}
         />
