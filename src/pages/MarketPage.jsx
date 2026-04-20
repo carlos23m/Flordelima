@@ -717,12 +717,12 @@ export default function MarketPage() {
             <div className="market-info-item">
               <span className="market-info-item__icon">💳</span>
               <strong>Pago con tarjeta</strong>
-              <p>Procesado de forma segura con Onvopay</p>
+              <p>Procesado de forma segura</p>
             </div>
             <div className="market-info-item">
               <span className="market-info-item__icon">💬</span>
               <strong>Pedido por WhatsApp</strong>
-              <p>Coordina tu entrega directo con Marlen</p>
+              <p>Coordina tu entrega directamente</p>
             </div>
             <div className="market-info-item">
               <span className="market-info-item__icon">🌿</span>
