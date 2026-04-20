@@ -559,14 +559,9 @@ export default function MarketPage() {
   }
 
   const handleOnvoResult = (result) => {
-    if (result?.status === 'succeeded') {
-      setOnvoStatus('success')
-      persistTransaction('succeeded', result)
-      setCart({})
-    } else {
-      setOnvoStatus('declined')
-      persistTransaction('declined', result)
-    }
+    setOnvoStatus('success')
+    persistTransaction('succeeded', result)
+    setCart({})
     setOnvoOpen(false)
     setSummaryOpen(true)
   }
