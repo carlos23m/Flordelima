@@ -594,7 +594,7 @@ export default function MarketPage() {
   return (
     <>
       <Navbar
-        brand="Flor de Lima"
+        brand="Finca Flordelima"
         links={navLinks}
         brandHref="/"
         cartCount={cartCount}
@@ -724,7 +724,7 @@ export default function MarketPage() {
       />
 
       <Footer
-        brand="Flor de Lima"
+        brand="Finca Flordelima"
         phone="8843-8492"
         whatsapp="https://wa.me/50688438492"
         facebook="https://facebook.com"
