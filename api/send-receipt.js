@@ -34,6 +34,7 @@ function buildEmailHtml({ client, items, total, paymentIntentId }) {
             <p style="margin:0 0 4px;color:#d4edda;font-size:0.75rem;letter-spacing:0.12em;text-transform:uppercase;">Recibo de compra</p>
             <h1 style="margin:0;color:#ffffff;font-family:Georgia,serif;font-size:1.6rem;font-weight:700;">Finca Flordelima</h1>
             <p style="margin:6px 0 0;color:#b7dfc8;font-size:0.8rem;">Productos Artesanales · Guácimo, Limón</p>
+            <p style="margin:14px 0 0;display:inline-block;background:rgba(0,0,0,0.2);color:#e8f5e9;font-family:monospace;font-size:0.8rem;padding:4px 14px;border-radius:20px;letter-spacing:0.05em;">ID: ${paymentIntentId}</p>
           </td>
         </tr>
 
@@ -75,13 +76,6 @@ function buildEmailHtml({ client, items, total, paymentIntentId }) {
                 <td style="padding:12px 0 0;text-align:right;font-weight:700;color:#2d6a4f;font-size:1.1rem;font-family:Georgia,serif;">${formatCRC(total)}</td>
               </tr>
             </table>
-          </td>
-        </tr>
-
-        <!-- Reference -->
-        <tr>
-          <td style="padding:20px 36px 0;">
-            <p style="margin:0;font-size:0.72rem;color:#aaa;">Referencia de pago: <span style="font-family:monospace;color:#888;">${paymentIntentId}</span></p>
           </td>
         </tr>
 
