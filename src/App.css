@@ -1346,6 +1346,17 @@
   transform: translateY(-1px);
 }
 
+@keyframes cart-bump {
+  0%   { transform: scale(1); }
+  40%  { transform: scale(1.32); }
+  70%  { transform: scale(0.92); }
+  100% { transform: scale(1); }
+}
+
+.navbar__cart-btn--bump {
+  animation: cart-bump 0.4s cubic-bezier(0.36, 0.07, 0.19, 0.97);
+}
+
 .navbar__cart-badge {
   position: absolute;
   top: -7px;

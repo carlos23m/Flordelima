@@ -295,11 +295,18 @@ function TransactionSummary({ open, status, client, items, total, paymentIntentI
 // ── Market product card ──────────────────────────────────────────────────────
 
 function MarketCard({ product, qty, onAdd, onRemove }) {
+  const [justAdded, setJustAdded] = useState(false)
   const accentColor = product.category === 'citrus' ? '#c8a96e' : '#40916c'
   const accentDark  = product.category === 'citrus' ? '#a0854e' : '#2d6a4f'
   const bgGradient  = product.category === 'citrus'
     ? 'linear-gradient(135deg, #fdf6e8 0%, #faf9f6 100%)'
     : 'linear-gradient(135deg, #f0faf3 0%, #faf9f6 100%)'
+
+  const handleAdd = () => {
+    onAdd()
+    setJustAdded(true)
+    setTimeout(() => setJustAdded(false), 1400)
+  }
 
   return (
     <Card sx={{
@@ -339,16 +346,18 @@ function MarketCard({ product, qty, onAdd, onRemove }) {
           <Button
             variant="contained"
             fullWidth
-            startIcon={<FaPlus style={{ fontSize: '0.8rem' }} />}
-            onClick={onAdd}
+            startIcon={justAdded ? <FaCheckCircle style={{ fontSize: '0.9rem' }} /> : <FaPlus style={{ fontSize: '0.8rem' }} />}
+            onClick={handleAdd}
             sx={{
               borderRadius: '8px', fontWeight: 700, textTransform: 'none', fontSize: '0.9rem',
-              background: accentColor, color: '#fff', py: 1.2, fontFamily: "'Inter', sans-serif",
-              boxShadow: 'none',
+              background: justAdded ? '#2d6a4f' : accentColor,
+              color: '#fff', py: 1.2, fontFamily: "'Inter', sans-serif",
+              boxShadow: justAdded ? `0 4px 16px ${accentColor}55` : 'none',
+              transition: 'background 0.3s',
               '&:hover': { background: accentDark, boxShadow: `0 4px 16px ${accentColor}55` },
             }}
           >
-            Agregar al carrito
+            {justAdded ? '¡Agregado!' : 'Agregar al carrito'}
           </Button>
         ) : (
           <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
@@ -358,7 +367,7 @@ function MarketCard({ product, qty, onAdd, onRemove }) {
             <Typography sx={{ flex: 1, textAlign: 'center', fontWeight: 700, fontSize: '1.1rem', color: '#0f1a0e', fontFamily: "'Playfair Display', serif" }}>
               {qty}
             </Typography>
-            <Button onClick={onAdd} variant="contained" sx={{ minWidth: 40, width: 40, height: 40, p: 0, borderRadius: '8px', background: accentColor, color: '#fff', boxShadow: 'none', '&:hover': { background: accentDark } }}>
+            <Button onClick={handleAdd} variant="contained" sx={{ minWidth: 40, width: 40, height: 40, p: 0, borderRadius: '8px', background: accentColor, color: '#fff', boxShadow: 'none', '&:hover': { background: accentDark } }}>
               <FaPlus style={{ fontSize: '0.75rem' }} />
             </Button>
           </Box>

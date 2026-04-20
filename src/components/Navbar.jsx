@@ -1,9 +1,20 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useRef } from 'react'
 import { FaBars, FaTimes, FaShoppingCart } from 'react-icons/fa'
 
 export default function Navbar({ brand, links, brandHref = '/', cartCount, onCartOpen }) {
   const [scrolled, setScrolled] = useState(false)
   const [menuOpen, setMenuOpen] = useState(false)
+  const [cartBump, setCartBump] = useState(false)
+  const prevCountRef = useRef(cartCount)
+
+  useEffect(() => {
+    if (cartCount > prevCountRef.current) {
+      setCartBump(true)
+      const t = setTimeout(() => setCartBump(false), 400)
+      return () => clearTimeout(t)
+    }
+    prevCountRef.current = cartCount
+  }, [cartCount])
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 60)
@@ -38,7 +49,7 @@ export default function Navbar({ brand, links, brandHref = '/', cartCount, onCar
             </a>
           ))}
           {showCart ? (
-            <button className="navbar__cart-btn" onClick={onCartOpen} aria-label="Abrir carrito">
+            <button className={`navbar__cart-btn${cartBump ? ' navbar__cart-btn--bump' : ''}`} onClick={onCartOpen} aria-label="Abrir carrito">
               <FaShoppingCart />
               {cartCount > 0 && <span className="navbar__cart-badge">{cartCount}</span>}
             </button>
