@@ -62,7 +62,7 @@ export default function Footer({ brand, phone, whatsapp, facebook, location, con
           <ul className="footer__product-list">
             <li><a href="#products">Leche de Vaca</a></li>
             <li><a href="#products">Queso de Vaca</a></li>
-            <li><a href="#products">Limón Mexicano</a></li>
+            <li><a href="#products">Limón Mecino</a></li>
             <li><a href="#products">Leche de Cabra</a></li>
             <li><a href="#products">Queso de Cabra</a></li>
           </ul>
