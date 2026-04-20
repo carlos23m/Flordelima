@@ -22,7 +22,7 @@ function StatItem({ number, label, desc }) {
 
 function App() {
   const text = {
-    brand: 'Flor de Lima',
+    brand: 'Flordelima',
     navProducts: 'Productos',
     navStory: 'Historia',
     navContact: 'Contacto',
@@ -30,7 +30,7 @@ function App() {
     heroEyebrow: 'Desde el campo a tu mesa',
     heroTitle: 'Sabores auténticos, elaborados con amor en el corazón de Costa Rica',
     heroText:
-      'En Flor de Lima cultivamos la paciencia, el respeto por la tierra y la pasión por los sabores genuinos. Cada producto nace de manos que conocen el campo, de animales criados con cuidado y de una familia que lleva más de tres décadas comprometida con la excelencia artesanal.',
+      'En Flordelima cultivamos la paciencia, el respeto por la tierra y la pasión por los sabores genuinos. Cada producto nace de manos que conocen el campo, de animales criados con cuidado y de una familia que lleva más de tres décadas comprometida con la excelencia artesanal.',
     viewProducts: 'Explorar Tienda',
     meetRanch: 'Nuestra Historia',
     storeEyebrow: 'Nuestra Tienda',
@@ -46,7 +46,7 @@ function App() {
     ranchStory: 'Nuestra Historia',
     storyTitle: 'Más de tres décadas cultivando la tierra con respeto, amor y propósito.',
     storyText:
-      'Flor de Lima nació de un sueño familiar: vivir en armonía con la naturaleza y compartir sus frutos con quienes los valoran. Desde entonces, hemos cultivado cada hectárea con conciencia, criado a nuestros animales con afecto y elaborado cada producto con el mismo cuidado que pondríamos en algo destinado a nuestra propia mesa. Hoy, tres generaciones comparten ese mismo compromiso — entregar lo mejor del campo, con honestidad y orgullo costarricense.',
+      'Flordelima nació de un sueño familiar: vivir en armonía con la naturaleza y compartir sus frutos con quienes los valoran. Desde entonces, hemos cultivado cada hectárea con conciencia, criado a nuestros animales con afecto y elaborado cada producto con el mismo cuidado que pondríamos en algo destinado a nuestra propia mesa. Hoy, tres generaciones comparten ese mismo compromiso — entregar lo mejor del campo, con honestidad y orgullo costarricense.',
     pastureFirst: 'Bienestar Animal',
     pastureFirstDesc: 'Nuestras vacas y cabras crecen en pasturas abiertas, con libertad para moverse y vivir con dignidad. Animales bien cuidados producen leche de calidad superior — y eso se siente en cada sorbo.',
     localCraft: 'Elaboración Artesanal',

@@ -140,7 +140,7 @@
 }
 
 .navbar__logo {
-  height: 92px;
+  height: 76px;
   width: auto;
   display: block;
   flex-shrink: 0;
@@ -1441,9 +1441,9 @@
 }
 
 .market-hero__badge-logo {
-  height: 200px;
+  height: 160px;
   width: auto;
-  margin: -15px 0 -5px;
+  margin: -12px 0 -4px;
 }
 
 .market-hero__badge-divider {
