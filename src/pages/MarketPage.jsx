@@ -512,6 +512,8 @@ export default function MarketPage() {
   const [cart, setCart] = useState({})
   const [activeCategory, setActiveCategory] = useState('all')
   const [cartOpen, setCartOpen] = useState(false)
+  const [cartFabBump, setCartFabBump] = useState(false)
+  const prevCartCountRef = useRef(0)
   const [clientFormOpen, setClientFormOpen] = useState(false)
   const [summaryOpen, setSummaryOpen] = useState(false)
   const [clientInfo, setClientInfo] = useState(null)
@@ -623,6 +625,15 @@ export default function MarketPage() {
   const cartCount = cartItems.reduce((s, { qty }) => s + qty, 0)
   const cartTotal = cartItems.reduce((s, { product, qty }) => s + product.priceNum * qty, 0)
 
+  useEffect(() => {
+    if (cartCount > prevCartCountRef.current) {
+      setCartFabBump(true)
+      const t = setTimeout(() => setCartFabBump(false), 400)
+      return () => clearTimeout(t)
+    }
+    prevCartCountRef.current = cartCount
+  }, [cartCount])
+
   const filtered = activeCategory === 'all'
     ? PRODUCTS
     : PRODUCTS.filter(p => p.category === activeCategory)
@@ -725,7 +736,7 @@ export default function MarketPage() {
       </main>
 
       {cartCount > 0 && (
-        <button className="cart-fab" onClick={() => setCartOpen(true)} aria-label="Abrir carrito">
+        <button className={`cart-fab${cartFabBump ? ' cart-fab--bump' : ''}`} onClick={() => setCartOpen(true)} aria-label="Abrir carrito">
           <FaShoppingCart />
           <span className="cart-fab__badge">{cartCount}</span>
         </button>
