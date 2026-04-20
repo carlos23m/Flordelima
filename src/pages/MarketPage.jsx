@@ -84,7 +84,7 @@ function loadOnvoScript() {
       return
     }
     const script = document.createElement('script')
-    script.src = 'https://onvo-pay-widget.vercel.app/sdk.js'
+    script.src = 'https://cdn.jsdelivr.net/gh/logeek-io/onvo-pay-js@main/dist/onvo.min.js'
     script.setAttribute('data-onvo', '')
     script.onload = () => resolve(window.onvo)
     script.onerror = () => reject(new Error('No se pudo cargar el sistema de pago'))
