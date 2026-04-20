@@ -701,7 +701,7 @@ export default function MarketPage() {
       {onvoOpen && paymentIntentId && (
         <OnvoPayModal
           paymentIntentId={paymentIntentId}
-          onClose={resetOnvo}
+          onClose={() => { if (onvoStatus === 'idle' || onvoStatus === 'loading') resetOnvo() }}
           onResult={handleOnvoResult}
           onError={handleOnvoError}
         />
@@ -711,7 +711,7 @@ export default function MarketPage() {
         open={summaryOpen}
         status={onvoStatus}
         client={clientInfo}
-        items={pendingCartItems}
+        items={pendingCartItems.map(({ product, qty }) => ({ ...product, qty }))}
         total={pendingTotal}
         onClose={resetOnvo}
       />
