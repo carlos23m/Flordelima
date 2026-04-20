@@ -54,7 +54,7 @@ function App() {
     simpleIngredients: 'Sin Artificios',
     simpleIngredientsDesc: 'Nada que no reconocerías en tu propia despensa. Nuestros productos se elaboran solo con ingredientes naturales, sin conservantes, colorantes ni aditivos innecesarios. Así de simple, así de honesto.',
     contactPrompt: '¿Lista para probar la diferencia de lo auténtico?',
-    contactCTA: 'Escríbenos para hacer un pedido, coordinar una visita a la finca o simplemente saber más sobre nuestros productos. Marlen y su familia estarán encantados de atenderte con el mismo cariño que ponemos en cada elaboración.',
+    contactCTA: 'Escríbenos para hacer un pedido, coordinar una visita a la finca o simplemente saber más sobre nuestros productos. Los encargados responsables estarán encantados de atenderte con el mismo cariño que ponemos en cada elaboración.',
     contactButton: 'Llamar Ahora',
     locationTitle: 'Visítanos en la finca',
     locationSubtitle: 'Estamos en Guácimo, Limón — en el verde corazón de Costa Rica',
@@ -316,7 +316,7 @@ function App() {
                 <p className="cta-prompt">{text.contactPrompt}</p>
                 <p className="cta-sub">{text.contactCTA}</p>
                 <div className="cta-contact-details">
-                  <strong>Marlen Navarro</strong>
+                  <strong>Whatsapp</strong>
                   <p>Teléfono: 8843-8492</p>
                   <p>SINPE Móvil: 8843-8492</p>
                 </div>
@@ -338,7 +338,7 @@ function App() {
         instagram="https://instagram.com"
         tiktok="https://tiktok.com"
         location={text.locationAddress}
-        contact="Marlen Navarro"
+        contact="Encargado responsable"
       />
     </>
   )
