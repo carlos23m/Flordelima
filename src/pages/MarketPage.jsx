@@ -1,13 +1,28 @@
-import { useState } from 'react'
+import { useState, useEffect, useRef } from 'react'
 import { Card, CardContent, Box, Typography, Button } from '@mui/material'
 import {
   FaShoppingCart, FaTimes, FaPlus, FaMinus, FaWhatsapp,
-  FaLeaf, FaTrash, FaCreditCard,
+  FaLeaf, FaTrash, FaCreditCard, FaCheckCircle,
 } from 'react-icons/fa'
 import Navbar from '../components/Navbar'
 import Footer from '../components/Footer'
 
 const WHATSAPP_NUMBER = '50688438492'
+const ONVO_PUBLIC_KEY = import.meta.env.VITE_ONVO_PUBLIC_KEY
+
+function loadOnvoScript() {
+  return new Promise((resolve, reject) => {
+    if (window.onvo?.pay) { resolve(); return }
+    const existing = document.getElementById('onvo-sdk')
+    if (existing) { existing.addEventListener('load', resolve); existing.addEventListener('error', reject); return }
+    const s = document.createElement('script')
+    s.id = 'onvo-sdk'
+    s.src = 'https://sdk.onvopay.com/sdk.js'
+    s.onload = resolve
+    s.onerror = () => reject(new Error('No se pudo cargar el módulo de pago'))
+    document.head.appendChild(s)
+  })
+}
 
 const PRODUCTS = [
   {
@@ -152,7 +167,36 @@ function MarketCard({ product, qty, onAdd, onRemove }) {
 
 // ── Cart drawer ──────────────────────────────────────────────────────────────
 
-function CartDrawer({ open, items, total, onClose, onAdd, onRemove, onClear }) {
+// ── Onvo Pay modal ───────────────────────────────────────────────────────────
+
+function OnvoPayModal({ paymentIntentId, onClose, onResult, onError }) {
+  const containerRef = useRef(null)
+
+  useEffect(() => {
+    if (!paymentIntentId || !containerRef.current) return
+    window.onvo.pay({
+      paymentIntentId,
+      publicKey: ONVO_PUBLIC_KEY,
+      container: containerRef.current,
+      onSuccess: (result) => onResult(result),
+      onError: (err) => { console.error('Onvo error:', err); onError(err) },
+      onClose,
+    })
+  }, [paymentIntentId, onClose, onResult, onError])
+
+  return (
+    <div className="onvo-modal-overlay" onClick={onClose}>
+      <div className="onvo-modal" onClick={e => e.stopPropagation()}>
+        <button className="onvo-modal__close" onClick={onClose} aria-label="Cerrar"><FaTimes /></button>
+        <div ref={containerRef} id="onvo-container" />
+      </div>
+    </div>
+  )
+}
+
+// ── Cart drawer ──────────────────────────────────────────────────────────────
+
+function CartDrawer({ open, items, total, onClose, onAdd, onRemove, onClear, onOnvoPay, onvoLoading }) {
   const waMessage = () => {
     if (items.length === 0) return '#'
     const lines = items.map(({ product, qty }) =>
@@ -203,9 +247,9 @@ function CartDrawer({ open, items, total, onClose, onAdd, onRemove, onClear }) {
               <span>Total</span>
               <strong>₡{total.toLocaleString('es-CR')}</strong>
             </div>
-            <button className="cart-onvo-btn" disabled title="Pago con tarjeta temporalmente no disponible" style={{ opacity: 0.45, cursor: 'not-allowed' }}>
+            <button className="cart-onvo-btn" onClick={onOnvoPay} disabled={onvoLoading}>
               <FaCreditCard style={{ fontSize: '1.1rem' }} />
-              Tarjeta (no disponible)
+              {onvoLoading ? 'Procesando…' : 'Pagar con Tarjeta'}
             </button>
             <a
               href={waMessage()}
@@ -233,6 +277,10 @@ export default function MarketPage() {
   const [cart, setCart] = useState({})
   const [activeCategory, setActiveCategory] = useState('all')
   const [cartOpen, setCartOpen] = useState(false)
+  const [paymentIntentId, setPaymentIntentId] = useState(null)
+  const [onvoOpen, setOnvoOpen] = useState(false)
+  const [onvoStatus, setOnvoStatus] = useState('idle') // idle | loading | success | declined | error
+  const [onvoErrorMsg, setOnvoErrorMsg] = useState('')
 
   const addToCart = (product) =>
     setCart(prev => ({
@@ -253,6 +301,50 @@ export default function MarketPage() {
     })
 
   const clearCart = () => setCart({})
+
+  const handleOnvoPay = async () => {
+    setOnvoStatus('loading')
+    setOnvoErrorMsg('')
+    try {
+      await loadOnvoScript()
+      const res = await fetch('/api/create-payment-intent', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ amount: cartTotal, description: 'Pedido Flor de Lima' }),
+      })
+      const data = await res.json()
+      if (!res.ok) throw new Error(data.error || 'Error al crear el pago')
+      setPaymentIntentId(data.id)
+      setOnvoOpen(true)
+      setOnvoStatus('idle')
+      setCartOpen(false)
+    } catch (err) {
+      console.error('handleOnvoPay:', err)
+      setOnvoErrorMsg(err.message || 'Error al procesar el pago')
+      setOnvoStatus('error')
+    }
+  }
+
+  const handleOnvoResult = (result) => {
+    if (result?.status === 'succeeded') {
+      setOnvoStatus('success')
+    } else {
+      setOnvoStatus('declined')
+      setOnvoErrorMsg('Tu tarjeta fue rechazada. Por favor intenta con otra tarjeta.')
+    }
+  }
+
+  const handleOnvoError = (err) => {
+    setOnvoStatus('error')
+    setOnvoErrorMsg(err?.message || 'Error al procesar el pago')
+  }
+
+  const resetOnvo = () => {
+    setOnvoOpen(false)
+    setPaymentIntentId(null)
+    setOnvoStatus('idle')
+    setOnvoErrorMsg('')
+  }
 
   const cartItems = Object.values(cart)
   const cartCount = cartItems.reduce((s, { qty }) => s + qty, 0)
@@ -372,7 +464,38 @@ export default function MarketPage() {
         onAdd={addToCart}
         onRemove={removeFromCart}
         onClear={clearCart}
+        onOnvoPay={handleOnvoPay}
+        onvoLoading={onvoStatus === 'loading'}
       />
+
+      {onvoOpen && (
+        onvoStatus === 'success' ? (
+          <div className="onvo-modal-overlay">
+            <div className="onvo-modal onvo-modal--success">
+              <FaCheckCircle style={{ fontSize: '3rem', color: '#40916c', marginBottom: 16 }} />
+              <h3>¡Pago exitoso!</h3>
+              <p>Tu pedido ha sido confirmado.</p>
+              <button className="cart-onvo-btn" onClick={() => { resetOnvo(); clearCart() }}>Cerrar</button>
+            </div>
+          </div>
+        ) : onvoStatus === 'declined' || onvoStatus === 'error' ? (
+          <div className="onvo-modal-overlay">
+            <div className="onvo-modal onvo-modal--error">
+              <FaTimes style={{ fontSize: '2.5rem', color: '#c0392b', marginBottom: 16 }} />
+              <h3>{onvoStatus === 'declined' ? 'Pago rechazado' : 'Error de pago'}</h3>
+              <p>{onvoErrorMsg}</p>
+              <button className="cart-onvo-btn" onClick={resetOnvo}>Cerrar</button>
+            </div>
+          </div>
+        ) : paymentIntentId ? (
+          <OnvoPayModal
+            paymentIntentId={paymentIntentId}
+            onClose={resetOnvo}
+            onResult={handleOnvoResult}
+            onError={handleOnvoError}
+          />
+        ) : null
+      )}
 
       <Footer
         brand="Flor de Lima"
