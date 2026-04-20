@@ -335,6 +335,8 @@ function App() {
         phone="8843-8492"
         whatsapp="https://wa.me/50688438492"
         facebook="https://facebook.com"
+        instagram="https://instagram.com"
+        tiktok="https://tiktok.com"
         location={text.locationAddress}
         contact="Marlen Navarro"
       />

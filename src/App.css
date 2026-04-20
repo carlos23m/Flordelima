@@ -1167,6 +1167,14 @@
   background: #25D366;
 }
 
+.footer__social-link--ig:hover {
+  background: #e1306c;
+}
+
+.footer__social-link--tt:hover {
+  background: #010101;
+}
+
 .footer__col-title {
   font-family: var(--font-body);
   font-size: 0.78rem;

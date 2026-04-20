@@ -1,6 +1,7 @@
-import { FaLeaf, FaFacebook, FaWhatsapp, FaPhone, FaMapMarkerAlt } from 'react-icons/fa'
+import { FaLeaf, FaFacebook, FaWhatsapp, FaPhone, FaMapMarkerAlt, FaInstagram } from 'react-icons/fa'
+import { SiTiktok } from 'react-icons/si'
 
-export default function Footer({ brand, phone, whatsapp, facebook, location, contact }) {
+export default function Footer({ brand, phone, whatsapp, facebook, instagram, tiktok, location, contact }) {
   const currentYear = new Date().getFullYear()
 
   return (
@@ -33,6 +34,24 @@ export default function Footer({ brand, phone, whatsapp, facebook, location, con
               className="footer__social-link footer__social-link--wa"
             >
               <FaWhatsapp />
+            </a>
+            <a
+              href={instagram}
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label="Instagram"
+              className="footer__social-link footer__social-link--ig"
+            >
+              <FaInstagram />
+            </a>
+            <a
+              href={tiktok}
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label="TikTok"
+              className="footer__social-link footer__social-link--tt"
+            >
+              <SiTiktok />
             </a>
           </div>
         </div>
