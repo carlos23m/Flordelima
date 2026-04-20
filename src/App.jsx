@@ -116,14 +116,14 @@ function App() {
     {
       title: 'Limón Mecino',
       description: text.lactoseFreeMilkDesc,
-      price: '₡800 / kg',
+      price: '₡100 / cada uno',
       category: 'citrus',
       image: 'https://i.pinimg.com/1200x/78/50/96/7850969af6fb06260934cebf95030bda.jpg',
     },
     {
       title: 'Leche de Cabra',
       description: text.product4Desc,
-      price: '₡1,800 / litro',
+      price: '₡4,500 / litro',
       category: 'dairy',
       image: 'https://i.pinimg.com/1200x/ea/5e/9d/ea5e9dd947880973977a1af126b29d6d.jpg',
     },
@@ -137,7 +137,7 @@ function App() {
     {
       title: 'Jabón Artesanal',
       description: 'Jabón natural elaborado en nuestra finca. Rico en vitaminas y minerales, hidrata y suaviza la piel profundamente. Sin parabenos ni sulfatos. Un lujo artesanal de Finca Flordelima.',
-      price: '₡3,500 / unidad',
+      price: '₡4,500 / unidad',
       category: 'dairy',
       image: 'https://i.pinimg.com/736x/f3/69/db/f369dbe53d10e315a26b5671898f5ca6.jpg',
     },
