@@ -381,9 +381,12 @@ function MarketCard({ product, qty, onAdd, onRemove }) {
 
 function OnvoPayModal({ paymentIntentId, onClose, onResult, onError }) {
   const containerRef      = useRef(null)
+  // Stable refs so the Onvo SDK closure (created once on mount) always calls the
+  // latest prop values without needing to be re-registered on every render.
   const onCloseRef        = useRef(onClose)
   const onResultRef       = useRef(onResult)
   const onErrorRef        = useRef(onError)
+  // Tracks whether a result arrived so onClose doesn't fire a second time after onSuccess/onError.
   const resultReceivedRef = useRef(false)
 
   useEffect(() => { onCloseRef.current  = onClose  }, [onClose])
@@ -406,6 +409,8 @@ function OnvoPayModal({ paymentIntentId, onClose, onResult, onError }) {
         onErrorRef.current(err)
       },
       onClose: () => {
+        // Onvo also fires onClose after onSuccess/onError, so only propagate
+        // it when the user dismissed the modal without completing a payment.
         if (!resultReceivedRef.current) onCloseRef.current()
       },
     })

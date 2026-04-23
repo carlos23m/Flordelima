@@ -86,10 +86,15 @@ function App() {
     { href: '/tienda',   label: 'Tienda' },
   ]
 
+  // Separate observer for the value cards so all three receive is-visible on the same
+  // tick, keeping the CSS stagger delays (reveal-delay-1/2/3) in sync.
+  // useScrollReveal observes each element individually, which would break the coordinated entrance.
   const storyValuesRef = useRef(null)
   useEffect(() => {
     const container = storyValuesRef.current
     if (!container) return
+    // Browsers that don't support IntersectionObserver would leave the cards permanently
+    // hidden behind the reveal class, so we show them immediately as a fallback.
     if (!('IntersectionObserver' in window)) {
       container.querySelectorAll('.reveal').forEach(el => el.classList.add('is-visible'))
       return
@@ -98,9 +103,12 @@ function App() {
       ([entry]) => {
         if (entry.isIntersecting) {
           container.querySelectorAll('.reveal').forEach(el => el.classList.add('is-visible'))
+          // Unobserve after first trigger so scrolling back up doesn't reset the stagger.
           observer.unobserve(container)
         }
       },
+      // rootMargin bottom offset fires the animation just before the section fully enters
+      // the viewport, giving the transition a head start so it feels snappy.
       { threshold: 0.05, rootMargin: '0px 0px -40px 0px' }
     )
     observer.observe(container)
@@ -253,6 +261,8 @@ function App() {
                   allowFullScreen={true}
                   loading="lazy"
                   referrerPolicy="no-referrer-when-downgrade"
+                  // allow-top-navigation is intentionally absent: prevents the iframe
+                  // from redirecting the parent page if the Maps CDN were compromised.
                   sandbox="allow-scripts allow-same-origin"
                   title="Mapa de ubicación de Finca Flordelima"
                 />
