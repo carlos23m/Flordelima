@@ -12,10 +12,37 @@ export default async function handler(req, res) {
 
   if (!client?.email || !client?.nombre || !client?.telefono)
     return res.status(400).json({ error: 'Datos del cliente incompletos' })
+
+  const MAX = { nombre: 120, email: 254, telefono: 30, cedula: 20, canton: 80, direccion: 250, notas: 500 }
+  if (
+    client.nombre?.length    > MAX.nombre    ||
+    client.email?.length     > MAX.email     ||
+    client.telefono?.length  > MAX.telefono  ||
+    client.cedula?.length    > MAX.cedula    ||
+    client.canton?.length    > MAX.canton    ||
+    client.direccion?.length > MAX.direccion ||
+    client.notas?.length     > MAX.notas
+  ) return res.status(400).json({ error: 'Campo demasiado largo' })
   if (!paymentIntentId || !amount || !status || !items)
     return res.status(400).json({ error: 'Datos de transacción incompletos' })
   if (!['succeeded', 'declined', 'failed'].includes(status))
     return res.status(400).json({ error: 'Estado de transacción inválido' })
+
+  // Verify payment status directly with Onvo before recording a succeeded transaction.
+  // Prevents attackers from forging success by calling this endpoint with a fake status.
+  if (status === 'succeeded') {
+    try {
+      const verify = await fetch(`https://api.onvopay.com/v1/payment-intents/${paymentIntentId}`, {
+        headers: { Authorization: `Bearer ${process.env.ONVO_SECRET_KEY}` },
+      })
+      if (!verify.ok) return res.status(400).json({ error: 'No se pudo verificar el pago' })
+      const onvoData = await verify.json()
+      if (onvoData.status !== 'succeeded')
+        return res.status(400).json({ error: 'El pago no fue confirmado por el procesador' })
+    } catch {
+      return res.status(502).json({ error: 'Error al verificar el pago con Onvo' })
+    }
+  }
 
   try {
     const { data: clientRow, error: clientError } = await supabase

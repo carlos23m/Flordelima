@@ -253,6 +253,7 @@ function App() {
                   allowFullScreen={true}
                   loading="lazy"
                   referrerPolicy="no-referrer-when-downgrade"
+                  sandbox="allow-scripts allow-same-origin"
                   title="Mapa de ubicación de Finca Flordelima"
                 />
               </div>

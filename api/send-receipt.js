@@ -1,6 +1,17 @@
 import { Resend } from 'resend'
+import { createClient } from '@supabase/supabase-js'
 
 const resend = new Resend(process.env.RESEND_API_KEY)
+const supabase = createClient(process.env.SUPABASE_URL, process.env.SUPABASE_SERVICE_KEY)
+
+function escapeHtml(str) {
+  return String(str ?? '')
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;')
+    .replace(/'/g, '&#x27;')
+}
 
 function formatCRC(amount) {
   return amount.toLocaleString('es-CR', { style: 'currency', currency: 'CRC', maximumFractionDigits: 0 })
@@ -9,8 +20,8 @@ function formatCRC(amount) {
 function buildEmailHtml({ client, items, total, paymentIntentId }) {
   const itemRows = items.map((item, i) => `
     <tr style="background:${i % 2 === 0 ? '#ffffff' : '#fafaf8'};">
-      <td style="padding:13px 16px;color:#1a2e1a;font-size:0.92rem;">${item.title}</td>
-      <td style="padding:13px 16px;text-align:center;color:#6b7c6b;font-size:0.88rem;">×${item.qty}</td>
+      <td style="padding:13px 16px;color:#1a2e1a;font-size:0.92rem;">${escapeHtml(item.title)}</td>
+      <td style="padding:13px 16px;text-align:center;color:#6b7c6b;font-size:0.88rem;">×${escapeHtml(item.qty)}</td>
       <td style="padding:13px 16px;text-align:right;color:#1a2e1a;font-weight:600;font-size:0.92rem;white-space:nowrap;">${formatCRC(item.priceNum * item.qty)}</td>
     </tr>
   `).join('')
@@ -28,8 +39,8 @@ function buildEmailHtml({ client, items, total, paymentIntentId }) {
 
   const clientRows = clientFields.map(([label, value]) => `
     <tr>
-      <td style="padding:7px 0;color:#8a9e8a;font-size:0.82rem;width:90px;vertical-align:top;">${label}</td>
-      <td style="padding:7px 0;color:#1a2e1a;font-size:0.88rem;">${value}</td>
+      <td style="padding:7px 0;color:#8a9e8a;font-size:0.82rem;width:90px;vertical-align:top;">${escapeHtml(label)}</td>
+      <td style="padding:7px 0;color:#1a2e1a;font-size:0.88rem;">${escapeHtml(value)}</td>
     </tr>
   `).join('')
 
@@ -85,7 +96,7 @@ function buildEmailHtml({ client, items, total, paymentIntentId }) {
           <!-- Greeting -->
           <tr>
             <td style="padding:22px 40px 0;text-align:center;">
-              <p style="margin:0;font-size:1.05rem;color:#2a3d2a;font-family:Georgia,serif;">Gracias por tu compra, <strong>${client.nombre.split(' ')[0]}</strong>.</p>
+              <p style="margin:0;font-size:1.05rem;color:#2a3d2a;font-family:Georgia,serif;">Gracias por tu compra, <strong>${escapeHtml(client.nombre.split(' ')[0])}</strong>.</p>
               <p style="margin:6px 0 0;font-size:0.82rem;color:#8a9e8a;">Aquí tienes el resumen de tu pedido para tus registros.</p>
             </td>
           </tr>
@@ -142,7 +153,7 @@ function buildEmailHtml({ client, items, total, paymentIntentId }) {
             <td style="padding:24px 40px 0;">
               <div style="background:#f8f6f2;border:1px solid #e0dbd2;border-radius:8px;padding:14px 18px;">
                 <p style="margin:0 0 5px;font-size:0.65rem;font-weight:700;color:#8a9e8a;text-transform:uppercase;letter-spacing:0.14em;">ID de transacción</p>
-                <p style="margin:0;font-family:'Courier New',Courier,monospace;font-size:0.85rem;color:#2a3d2a;word-break:break-all;letter-spacing:0.02em;">${paymentIntentId}</p>
+                <p style="margin:0;font-family:'Courier New',Courier,monospace;font-size:0.85rem;color:#2a3d2a;word-break:break-all;letter-spacing:0.02em;">${escapeHtml(paymentIntentId)}</p>
               </div>
             </td>
           </tr>
@@ -178,6 +189,17 @@ export default async function handler(req, res) {
   if (!client?.email) return res.status(400).json({ error: 'Email requerido' })
   if (!items?.length || !total || !paymentIntentId)
     return res.status(400).json({ error: 'Datos incompletos' })
+
+  // Confirm the transaction actually succeeded before sending the receipt.
+  // Prevents the endpoint from being used to send arbitrary emails.
+  const { data: tx } = await supabase
+    .from('transactions')
+    .select('id')
+    .eq('payment_intent_id', paymentIntentId)
+    .eq('status', 'succeeded')
+    .maybeSingle()
+
+  if (!tx) return res.status(403).json({ error: 'Transacción no autorizada' })
 
   try {
     await resend.emails.send({

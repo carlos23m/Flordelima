@@ -1,11 +1,27 @@
+import { PRODUCTS } from './_products.js'
+
 export default async function handler(req, res) {
   if (req.method !== 'POST') {
     return res.status(405).json({ error: 'Method not allowed' })
   }
 
-  const { amount, description } = req.body
+  const { items, description } = req.body
 
-  if (!amount || amount <= 0) {
+  if (!Array.isArray(items) || items.length === 0) {
+    return res.status(400).json({ error: 'Items requeridos' })
+  }
+
+  // Compute total server-side from the trusted catalog — never trust a client-supplied amount.
+  let amount = 0
+  for (const { id, qty } of items) {
+    const product = PRODUCTS[id]
+    if (!product) return res.status(400).json({ error: `Producto inválido: ${id}` })
+    if (!Number.isInteger(qty) || qty < 1 || qty > 99)
+      return res.status(400).json({ error: 'Cantidad inválida' })
+    amount += product.priceNum * qty
+  }
+
+  if (amount <= 0) {
     return res.status(400).json({ error: 'Monto inválido' })
   }
 

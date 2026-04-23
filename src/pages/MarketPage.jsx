@@ -558,7 +558,10 @@ export default function MarketPage() {
       const res = await fetch('/api/create-payment-intent', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ amount: cartTotal, description: 'Pedido Flor de Lima' }),
+        body: JSON.stringify({
+          items: cartItems.map(({ product, qty }) => ({ id: product.id, qty })),
+          description: 'Pedido Flor de Lima',
+        }),
       })
       const data = await res.json()
       if (!res.ok) throw new Error(data.error || 'Error al crear el pago')
